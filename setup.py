@@ -1,6 +1,7 @@
-import setuptools
 import os
 from importlib.util import module_from_spec, spec_from_file_location
+
+import setuptools
 
 _PATH_ROOT = os.path.dirname(__file__)
 

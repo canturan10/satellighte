@@ -1,9 +1,12 @@
-import functools
 import importlib
 import os
+import shutil
+import tempfile
 from typing import Dict, List, Tuple
+from urllib.request import urlopen
 
 import yaml
+from tqdm import tqdm
 
 __PACKAGE_DIR__ = os.path.dirname(__file__)
 
@@ -58,6 +61,15 @@ def _get_model_dir() -> str:
     return model_registry_dir
 
 
+def _get_model_info(model_name, version) -> str:
+    # Get arch name and config name from the given model_name
+    arch, config, dataset = _parse_saved_model_name(model_name)
+
+    information = _get_from_config_file(f"MODEL.{arch}.{config}.{dataset}.{version}")
+
+    return information
+
+
 def _get_arch_dir() -> str:
     arch_registry_dir = os.path.join(
         _get_local_package_dir(), _get_from_config_file("PACKAGE.ARCH")
@@ -99,3 +111,43 @@ def _parse_saved_model_name(model: str) -> Tuple[str, str, str]:
     ], f"model must contain 3 under scores (_) but found: {len(splits)}"
     arch, config, dataset = splits
     return arch, config, dataset
+
+
+def _download_file_from_url(url, dst, progress=True):
+
+    file_size = None
+    u = urlopen(url)
+    meta = u.info()
+    if hasattr(meta, "getheaders"):
+        content_length = meta.getheaders("Content-Length")
+    else:
+        content_length = meta.get_all("Content-Length")
+    if content_length is not None and len(content_length) > 0:
+        file_size = int(content_length[0])
+
+    dst = os.path.expanduser(dst)
+    dst_dir = os.path.dirname(dst)
+    f = tempfile.NamedTemporaryFile(delete=False, dir=dst_dir)
+
+    try:
+        with tqdm(
+            total=file_size,
+            disable=not progress,
+            unit="B",
+            unit_scale=True,
+            unit_divisor=1024,
+        ) as pbar:
+            while True:
+                buffer = u.read(8192)
+                if len(buffer) == 0:
+                    break
+                f.write(buffer)
+                pbar.update(len(buffer))
+
+        f.close()
+
+        shutil.move(f.name, dst)
+    finally:
+        f.close()
+        if os.path.exists(f.name):
+            os.remove(f.name)
