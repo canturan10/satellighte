@@ -16,10 +16,12 @@ class Classifier(pl.LightningModule):
     def __init__(
         self,
         model: torch.nn.Module,
-        hparams: Dict = {},
+        hparams: Dict = None,
     ):
         super().__init__()
         self.model = model
+        self.__metrics = {}
+
         self.save_hyperparameters(hparams)
         self.configure_preprocess()
 
@@ -41,8 +43,9 @@ class Classifier(pl.LightningModule):
         # Apply preprocess with the help of registered buffer
         batch = ((batch / self.normalizer) - self.mean) / self.std
 
-        # Get logits from the model
-        logits = self.model.forward(batch)
+        with torch.no_grad():
+            # Get logits from the model
+            logits = self.model.forward(batch)
 
         # Apply postprocess for the logits that are returned from model and get predictions
         preds = self.model.logits_to_preds(logits)
@@ -88,6 +91,50 @@ class Classifier(pl.LightningModule):
         return json_preds
 
     @classmethod
+    def build(
+        cls,
+        arch: str,
+        config: str = None,
+        hparams: Dict = {},
+        **kwargs,
+    ) -> pl.LightningModule:
+        """
+        Build the model with given architecture and configuration.
+
+        Args:
+            arch (str): Model architecture name.
+            config (str, optional): Model configuration. Defaults to None.
+            hparams (Dict, optional): Hyperparameters. Defaults to {}.
+
+        Returns:
+            pl.LightningModule: Model instance with randomly initialized weights.
+        """
+
+        model = cls.build_arch(arch, config=config, **kwargs)
+        return cls(model, hparams=hparams)
+
+    @classmethod
+    def build_arch(
+        cls,
+        arch: str,
+        config: str = None,
+        **kwargs,
+    ) -> torch.nn.Module:
+        """
+        Build the architecture model with given configuration.
+
+        Args:
+            arch (str): Model architecture name.
+            config (str, optional): Model configuration. Defaults to None.
+
+        Returns:
+            torch.nn.Module: Architecture model instance with randomly initialized weights.
+        """
+
+        arch_cls = _get_arch_cls(arch)
+        return arch_cls.build(config=config, **kwargs)
+
+    @classmethod
     def from_pretrained(
         cls,
         model_name: str,
@@ -107,11 +154,6 @@ class Classifier(pl.LightningModule):
         """
 
         model = cls.from_pretrained_arch(model_name, version=version)
-
-        # Update hyperparameters.
-        hparams.update({"model": model_name})
-        hparams.update({"config": model.config})
-        hparams.update({"label": model.labels})
         return cls(model, hparams=hparams)
 
     @classmethod
@@ -128,7 +170,7 @@ class Classifier(pl.LightningModule):
             version (int, optional): Model version. Defaults to None.
 
         Returns:
-            torch.nn.Module: Model instance.
+            torch.nn.Module: Architecture model instance.
         """
 
         # Check if version is not given then get the latest version
@@ -141,37 +183,130 @@ class Classifier(pl.LightningModule):
         # Get arch class
         arch_cls = _get_arch_cls(arch)
 
+        api.get_saved_model(model_name, version)
+
         # Get pretrained model pat
-        model_path = os.path.join(_get_model_dir(), model_name, str(version))
+        model_path = os.path.join(_get_model_dir(), model_name, version)
 
         return arch_cls.from_pretrained(model_path, config=config)
 
     def training_step(self, batch, batch_idx):
-        pass
+        batch, targets = batch
+
+        # Apply preprocess with the help of registered buffer
+        batch = ((batch / self.normalizer) - self.mean) / self.std
+
+        # Get logits from the model
+        logits = self.model.forward(batch)
+
+        # Compute loss
+        loss = self.model.compute_loss(
+            logits,
+            targets,
+            hparams=self.hparams,
+        )
+
+        return loss
 
     def training_epoch_end(self, outputs):
-        pass
+        losses = {}
+        for output in outputs:
+            if isinstance(output, dict):
+                for k, v in output.items():
+                    if k not in losses:
+                        losses[k] = []
+                    losses[k].append(v)
+            else:
+                if "loss" not in losses:
+                    losses["loss"] = []
+                losses["loss"].append(output)
+
+        for name, loss in losses.items():
+            self.log("{}/training".format(name), sum(loss) / len(loss))
 
     def on_validation_epoch_start(self):
-        pass
+        for metric in self.__metrics.values():
+            metric.reset()
 
     def validation_step(self, batch, batch_idx):
-        pass
+        batch, targets = batch
+
+        # Apply preprocess with the help of registered buffer
+        batch = ((batch / self.normalizer) - self.mean) / self.std
+
+        with torch.no_grad():
+            # Get logits from the model
+            logits = self.model.forward(batch)
+
+            # Compute loss
+            loss = self.model.compute_loss(
+                logits,
+                targets,
+                hparams=self.hparams,
+            )
+
+        # Apply postprocess for the logits that are returned from model and get predictions
+        preds = self.model.logits_to_preds(logits)
+
+        for metric in self.__metrics.values():
+            metric.update(preds.cpu(), targets.cpu())
+
+        return loss
 
     def validation_epoch_end(self, outputs):
-        pass
+        losses = {}
+        for output in outputs:
+            if isinstance(output, dict):
+                for k, v in output.items():
+                    if k not in losses:
+                        losses[k] = []
+                    losses[k].append(v)
+            else:
+                if "loss" not in losses:
+                    losses["loss"] = []
+                losses["loss"].append(output)
+
+        for name, loss in losses.items():
+            self.log("{}/validation".format(name), sum(loss) / len(loss))
+
+        for name, metric in self.__metrics.items():
+            self.log("metrics/{}".format(name), metric.compute())
 
     def on_test_epoch_start(self):
-        pass
+        for metric in self.__metrics.values():
+            metric.reset()
 
     def test_step(self, batch, batch_idx):
-        pass
+        batch, targets = batch
+
+        # Apply preprocess with the help of registered buffer
+        batch = ((batch / self.normalizer) - self.mean) / self.std
+
+        with torch.no_grad():
+            # Get logits from the model
+            logits = self.model.forward(batch)
+
+            # Compute loss
+            loss = self.model.compute_loss(
+                logits,
+                targets,
+                hparams=self.hparams,
+            )
+
+        # Apply postprocess for the logits that are returned from model and get predictions
+        preds = self.model.logits_to_preds(logits)
+
+        for metric in self.__metrics.values():
+            metric.update(preds.cpu(), targets.cpu())
 
     def test_epoch_end(self, outputs):
-        pass
+        metric_results = {}
+        for name, metric in self.__metrics.items():
+            metric_results[name] = metric.compute()
+        return metric_results
 
     def configure_optimizers(self):
-        return self.arch.configure_optimizers(hparams=self.hparams["hparams"])
+        return self.model.configure_optimizers(hparams=self.hparams)
 
     def configure_preprocess(self):
         """
@@ -219,6 +354,24 @@ class Classifier(pl.LightningModule):
             torch.tensor(std).view(-1, 1, 1).contiguous(),
             persistent=False,
         )
+
+    def add_metric(self, name: str, metric: pl.metrics.Metric):
+        """Adds given metric with name key
+
+        Args:
+                name (str): name of the metric
+                metric (pl.metrics.Metric): Metric object
+        """
+        # TODO add warnings if override happens
+        self.__metrics[name] = metric
+
+    def get_metrics(self) -> Dict[str, pl.metrics.Metric]:
+        """Return metrics defined in the `FaceDetector` instance
+
+        Returns:
+                Dict[str, pl.metrics.Metric]: defined model metrics with names
+        """
+        return {k: v for k, v in self.__metrics.items()}
 
     def to_tensor(self, images: Union[np.ndarray, List]) -> List[torch.Tensor]:
         """Converts given image or list of images to list of tensors
