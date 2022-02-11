@@ -2,3 +2,13 @@ PACKAGE:
   NAME: satellighte
   ARCH: archs
   MODEL: models
+
+MODEL:
+  mobilenetv2:
+    default:
+      custom2:
+        v0:
+          url: "todo"
+      custom:
+        v0:
+          url: "todo"
