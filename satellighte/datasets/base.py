@@ -7,13 +7,6 @@ import numpy as np
 import imageio
 
 
-def default_collate_fn(batch):
-    batch, targets = zip(*batch)
-    batch = np.stack(batch, axis=0).astype(np.float32)
-    batch = torch.from_numpy(batch).permute(0, 3, 1, 2).contiguous()
-    return batch, targets
-
-
 class BaseDataset(Dataset):
     def __init__(
         self,
@@ -40,6 +33,7 @@ class BaseDataset(Dataset):
 
     def __getitem__(self, idx: int) -> Tuple:
         img = self._load_image(self.ids[idx])
+        img = torch.from_numpy(img).permute(2, 0, 1)
         targets = copy.deepcopy(self.targets[idx])
 
         # apply transforms
@@ -67,23 +61,7 @@ class BaseDataset(Dataset):
         elif len(img.shape) == 2:
             # found GRAYSCALE, converting to => RGB
             img = np.stack([img, img, img], axis=-1)
+        else:
+            img = img[:, :, :3]
 
         return np.array(img, dtype=np.uint8)
-
-    def get_dataloader(
-        self,
-        batch_size: int = 1,
-        num_workers: int = 0,
-        shuffle: bool = False,
-        collate_fn=default_collate_fn,
-        **kwargs,
-    ) -> DataLoader:
-
-        return DataLoader(
-            self,
-            batch_size=batch_size,
-            shuffle=shuffle,
-            num_workers=num_workers,
-            collate_fn=collate_fn,
-            **kwargs,
-        )
