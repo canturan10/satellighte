@@ -6,9 +6,6 @@ PACKAGE:
 MODEL:
   mobilenetv2:
     default:
-      custom2:
+      eurosat:
         v0:
-          url: "todo"
-      custom:
-        v0:
-          url: "todo"
+          url: "https://drive.google.com/file/d/1EP3YBmJZkeLhg4KaCsQSAHVaaZusPurz"

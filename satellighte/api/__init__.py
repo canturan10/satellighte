@@ -59,9 +59,9 @@ def get_saved_model(model: str, version: str):
 
     parts = urlparse(url)
     filename_from_remote = os.path.basename(parts.path)
-    filename, file_extension = os.path.splitext(filename_from_remote)
+    # filename, file_extension = os.path.splitext(filename_from_remote)
 
-    cached_file = os.path.join(model_dir, model + file_extension)
+    cached_file = os.path.join(model_dir, model + ".pth")
 
     if not os.path.exists(cached_file):
         sys.stderr.write('Downloading: "{}" to {}\n'.format(url, cached_file))

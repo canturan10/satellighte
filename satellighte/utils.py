@@ -1,4 +1,9 @@
 from typing import Dict, List, Tuple, Union
+import random
+from typing import Dict, List
+
+import numpy as np
+from PIL import Image, ImageColor, ImageDraw, ImageFont
 
 import torch
 import torch.nn.functional as F
@@ -37,7 +42,7 @@ def configure_batch(
         img = F.interpolate(
             img.unsqueeze(0),
             scale_factor=scale_factor,
-            mode="nearest",
+            mode="bilinear",
             recompute_scale_factor=False,
             align_corners=False,
         )
@@ -62,8 +67,52 @@ def configure_batch(
 
 
 def convert_json(
-    self,
     preds: List[torch.Tensor],
     label: List[str],
 ) -> List[Dict]:
-    pass
+    outputs = []
+    for scores in preds.cpu().numpy().tolist():
+        output = {
+            label: round(score, 2)
+            for score, label in zip(
+                scores,
+                label,
+            )
+        }
+        outputs.append(
+            dict(sorted(output.items(), key=lambda item: item[1], reverse=True))
+        )
+
+    return outputs
+
+
+def visualize(img: np.ndarray, preds: List[Dict]) -> Image:
+    """
+    Visualize detections
+
+    Args:
+        img (np.ndarray): 3 channel image
+        preds (List[Dict]): predictions
+
+    Returns:
+        Image: 3 channel pil image
+    """
+    pil_img = Image.fromarray(img)
+    pil_img = pil_img.resize((512, 512), Image.ANTIALIAS)
+    font = ImageFont.load_default()
+
+    for pred in preds:
+        max_key = max(pred, key=pred.get)
+        model_info = f" {max_key} : {pred[max_key]}"
+
+    text_width, text_height = font.getsize(model_info)
+    margin = np.ceil(0.05 * text_height)
+
+    ImageDraw.Draw(pil_img).text(
+        (margin, text_height - margin),
+        model_info,
+        fill="white",
+        font=font,
+    )
+
+    return pil_img
