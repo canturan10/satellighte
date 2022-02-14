@@ -8,6 +8,7 @@ import torch
 from . import api
 from .core import _get_arch_cls, _get_model_dir, _parse_saved_model_name
 from .utils import configure_batch, convert_json
+import torchmetrics as tm
 
 
 class Classifier(pl.LightningModule):
@@ -24,6 +25,10 @@ class Classifier(pl.LightningModule):
 
         self.save_hyperparameters(hparams)
         self.configure_preprocess()
+
+    @property
+    def input_size(self):
+        return self.model.config.get("input_size")
 
     # WARNING: This function should only be used during training. not inference
     def forward(
@@ -87,7 +92,7 @@ class Classifier(pl.LightningModule):
         preds = self.forward(batch)
 
         # Convert predictions to json format
-        json_preds = convert_json(preds, self.model.label)
+        json_preds = convert_json(preds, self.model.labels)
         return json_preds
 
     @classmethod
@@ -355,21 +360,21 @@ class Classifier(pl.LightningModule):
             persistent=False,
         )
 
-    def add_metric(self, name: str, metric: pl.metrics.Metric):
+    def add_metric(self, name: str, metric: tm.Metric):
         """Adds given metric with name key
 
         Args:
                 name (str): name of the metric
-                metric (pl.metrics.Metric): Metric object
+                metric (tm.Metric): Metric object
         """
         # TODO add warnings if override happens
         self.__metrics[name] = metric
 
-    def get_metrics(self) -> Dict[str, pl.metrics.Metric]:
+    def get_metrics(self) -> Dict[str, tm.Metric]:
         """Return metrics defined in the `FaceDetector` instance
 
         Returns:
-                Dict[str, pl.metrics.Metric]: defined model metrics with names
+                Dict[str, tm.Metric]: defined model metrics with names
         """
         return {k: v for k, v in self.__metrics.items()}
 

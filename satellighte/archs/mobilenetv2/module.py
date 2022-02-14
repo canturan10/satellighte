@@ -57,8 +57,6 @@ class MobileNetV2(nn.Module):
             dropout=self.config["model"]["dropout"],
         )
 
-        self.loss_fcn = nn.CrossEntropyLoss()
-
         if self.config["model"]["pretrained"]:
             self.backbone.load_state_dict(
                 torchvision.models.mobilenet_v2(pretrained=True).state_dict(),
@@ -75,7 +73,12 @@ class MobileNetV2(nn.Module):
     def build(cls, config: str = "", labels: List[str] = None, **kwargs) -> nn.Module:
         # return model with random weight initialization
         labels = ["cls1", "cls2"] if labels is None else labels
-        return cls(config=MobileNetV2.__CONFIGS__[config], labels=labels, **kwargs)
+
+        return cls(
+            config=MobileNetV2.__CONFIGS__[config],
+            labels=labels,
+            **kwargs,
+        )
 
     @classmethod
     def from_pretrained(
@@ -88,18 +91,13 @@ class MobileNetV2(nn.Module):
 
         *_, full_model_name, _ = model_path.split(os.path.sep)
 
-        with open(os.path.join(model_path, "labels.txt"), "r") as foo:
-            labels = [line.rstrip("\n") for line in foo]
+        st = torch.load(os.path.join(model_path, f"{full_model_name}.pth"))
 
         model = cls(
-            config=MobileNetV2.__CONFIGS__[config], labels=labels, *args, **kwargs
+            config=MobileNetV2.__CONFIGS__[config], labels=st["labels"], *args, **kwargs
         )
 
-        for file in os.listdir(model_path):
-            if file.startswith(full_model_name) and file.endswith((".pt", ".pth")):
-                st = torch.load(os.path.join(model_path, file))
-
-        model.load_state_dict(st, strict=False)
+        model.load_state_dict(st["state_dict"], strict=True)
 
         return model
 
@@ -109,25 +107,48 @@ class MobileNetV2(nn.Module):
         targets: List,
         hparams: Dict = {},
     ):
-        print(logits)
-        print(targets)
-        input()
-        loss = self.loss_fcn(logits, targets)
-        return {
-            "loss": loss,
-        }
+        if hparams.get("criterion", "cross_entropy") == "cross_entropy":
+            loss_fcn = nn.CrossEntropyLoss()
+        else:
+            raise ValueError("Unknown criterion")
+
+        return {"loss": loss_fcn(logits, targets)}
 
     def configure_optimizers(self, hparams: Dict):
-        optimizer = torch.optim.SGD(
-            self.parameters(),
-            lr=hparams.get("learning_rate", 1e-1),
-            momentum=hparams.get("momentum", 0.9),
-            weight_decay=hparams.get("weight_decay", 1e-5),
-        )
-        scheduler = torch.optim.lr_scheduler.StepLR(
-            optimizer,
-            hparams.get("step_size", 4),
-            gamma=hparams.get("gamma", 0.5),
-        )
+        hparams_optimizer = hparams.get("optimizer", "sgd")
+        if hparams_optimizer == "sgd":
+            optimizer = torch.optim.SGD(
+                self.parameters(),
+                lr=hparams.get("learning_rate", 1e-1),
+                momentum=hparams.get("momentum", 0.9),
+                weight_decay=hparams.get("weight_decay", 1e-5),
+            )
+        elif hparams_optimizer == "adam":
+            optimizer = torch.optim.Adam(
+                self.parameters(),
+                lr=hparams.get("learning_rate", 1e-1),
+                betas=hparams.get("betas", (0.9, 0.999)),
+                eps=hparams.get("eps", 1e-08),
+                weight_decay=hparams.get("weight_decay", 1e-5),
+            )
+        else:
+            raise ValueError("Unknown optimizer")
+
+        hparams_scheduler = hparams.get("scheduler", "steplr")
+        if hparams_scheduler == "steplr":
+            scheduler = torch.optim.lr_scheduler.StepLR(
+                optimizer,
+                hparams.get("step_size", 4),
+                gamma=hparams.get("gamma", 0.5),
+            )
+        elif hparams_scheduler == "multisteplr":
+            scheduler = torch.optim.lr_scheduler.MultiStepLR(
+                optimizer,
+                hparams.get("step_size", 4),
+                gamma=hparams.get("gamma", 0.5),
+                milestones=hparams.get("milestones", [500000, 1000000, 1500000]),
+            )
+        else:
+            raise ValueError("Unknown scheduler")
 
         return [optimizer], [scheduler]
