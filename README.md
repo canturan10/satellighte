@@ -49,18 +49,27 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Satellighte
 
-This repo is prepared to present your projects in an understandable and beautiful view.
+**Satellighte** is an image classification library  that consist state-of-the-art deep learning methods. It is a combination of the words **'Satellite'** and **'Light'**, and its purpose is to establish a light structure to classify satellite images, but to obtain robust results.
 
-_Source: [readme-template](https://github.com/canturan10/readme-template)_
+> **Satellite image classification** is the most significant technique used in remote sensing for the computerized study and pattern recognition of satellite information, which is based on diversity structures of the image that involve rigorous validation of the training samples depending on the used classification algorithm.
+>
+> _Source: [paperswithcode](https://paperswithcode.com/task/satellite-image-classification)_
 
 <!-- PREREQUISITES -->
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
-| requirement   | version |
-| ------------- | ------- |
-| requirement_1 | >=0.0.8 |
-| requirement_2 | ~=1.3.0 |
+
+| requirement       | version  |
+| ----------------- | -------- |
+| imageio           | ~=2.15.0 |
+| numpy             | ~=1.22.2 |
+| pytorch_lightning | ~=1.5.10 |
+| scikit-learn      | ~=1.0.2  |
+| torchaudio        | ~=0.8.1  |
+| torchmetrics      | ~=0.7.1  |
+| torchvision       | ~=0.9.1  |
+| torch             | ~=1.8.1  |
 
 <!-- INSTALLATION -->
 ## Installation
@@ -70,14 +79,14 @@ To install Satellighte, follow these steps:
 ### From Pypi
 
 ```bash
-pip install requirement_1
+pip install satellighte
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/canturan10/readme-template
-cd requirement_1
+git clone https://github.com/canturan10/satellighte.git
+cd satellighte
 pip install .
 ```
 <!-- USAGE EXAMPLES -->
@@ -85,15 +94,35 @@ pip install .
 
 A few motivating and useful examples of how your project can be used. Spice this up with additional screenshots, code examples and demos.
 
-_For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)
+_For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_
 
 <!-- TESTS -->
 ## Tests
 
-During development, you might like to have tests run on every file.
+During development, you might like to have tests run.
+
+Install dependencies
 
 ```bash
-pytest tests
+pip install -e ".[test]"
+```
+
+### Linting Tests
+
+```bash
+pytest satellighte --pylint --pylint-error-types=EF
+```
+
+### Document Tests
+
+```bash
+pytest satellighte --doctest-modules
+```
+
+### Coverage Tests
+
+```bash
+pytest --doctest-modules --cov satellighte --cov-report term
 ```
 
 <!-- CONTRIBUTING -->
@@ -164,15 +193,30 @@ The references used in the development of the project are as follows.
 
 - [Img Shields](https://shields.io)
 - [GitHub Pages](https://pages.github.com)
+- [FastFace](https://github.com/borhanMorphy/fastface)
+- [PyTorch Lightning](https://github.com/PyTorchLightning/pytorch-lightning)
 
 <!-- CITATIONS -->
 ## Citations
 
 ```bibtex
-@inproceedings{Lorem,
-   author={Lorem ipsum dolor sit amet},
-   year={2021},
-   title={Lorem ipsum dolor sit amet}
+@article{helber2019eurosat,
+  title={Eurosat: A novel dataset and deep learning benchmark for land use and land cover classification},
+  author={Helber, Patrick and Bischke, Benjamin and Dengel, Andreas and Borth, Damian},
+  journal={IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing},
+  year={2019},
+  publisher={IEEE}
+}
+```
+
+```bibtex
+@inproceedings{helber2018introducing,
+  title={Introducing EuroSAT: A Novel Dataset and Deep Learning Benchmark for Land Use and Land Cover Classification},
+  author={Helber, Patrick and Bischke, Benjamin and Dengel, Andreas and Borth, Damian},
+  booktitle={IGARSS 2018-2018 IEEE International Geoscience and Remote Sensing Symposium},
+  pages={204--207},
+  year={2018},
+  organization={IEEE}
 }
 ```
 
