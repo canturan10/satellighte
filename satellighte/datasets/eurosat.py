@@ -115,5 +115,5 @@ class EuroSAT(BaseDataset):
 
 
 if __name__ == "__main__":
-    # data = EuroSAT("satellighte/satellighte/datas/eurosat")
-    # print(data[0])
+    data = EuroSAT("/home/can/Desktop/satellighte/satellighte/datas/eurosat")
+    print(data[0])

@@ -14,6 +14,8 @@ import torchmetrics as tm
 class Classifier(pl.LightningModule):
     """Generic pl.LightningModule definition for image classification"""
 
+    # pylint: disable=no-member
+
     def __init__(
         self,
         model: torch.nn.Module,
@@ -275,7 +277,11 @@ class Classifier(pl.LightningModule):
             self.log("{}/validation".format(name), sum(loss) / len(loss))
 
         for name, metric in self.__metrics.items():
-            self.log("metrics/{}".format(name), metric.compute())
+            self.log(
+                "metrics/{}".format(name),
+                metric.compute(),
+                prog_bar=True,
+            )
 
     def on_test_epoch_start(self):
         for metric in self.__metrics.values():

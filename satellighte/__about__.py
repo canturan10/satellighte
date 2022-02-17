@@ -7,23 +7,46 @@ from satellighte.version import __version__ as pkg_version
 def _load_requirements(
     file_name: str = "requirements.txt", comment_char: str = "#"
 ) -> List[str]:
+    """
+    Load requirements from a text file.
+
+    Args:
+        file_name (str, optional): File name. Defaults to "requirements.txt".
+        comment_char (str, optional): Disregard lines starting with this character. Defaults to "#".
+
+    Returns:
+        List[str]: List of requirements.
+    """
+    # Open the file
     with open(file_name, "r", encoding="utf-8") as file:
         lines = [ln.strip() for ln in file.readlines()]
     reqs = []
     for ln in lines:
-        # filer all comments
+
+        # Disregard comments
         if comment_char in ln:
             ln = ln[: ln.index(comment_char)].strip()
-        # skip directly installed dependencies
+
+        # Disregard http or @http lines
         if ln.startswith("http") or "@http" in ln:
             continue
-        if ln:  # if requirement is not empty
+
+        # Add the line to the list
+        if ln:
             reqs.append(ln)
     return reqs
 
 
 def _load_readme(file_name: str = "README.md") -> str:
+    """
+    Load readme from a text file.
 
+    Args:
+        file_name (str, optional): File name that contains the readme. Defaults to "README.md".
+
+    Returns:
+        str: Readme text.
+    """
     text = open(file_name, "r", encoding="utf-8").read()
 
     return text

@@ -8,6 +8,7 @@ import imageio
 
 
 class BaseDataset(Dataset):
+    # pylint: disable=no-member
     def __init__(
         self,
         ids: List[str],

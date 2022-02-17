@@ -7,6 +7,7 @@ from .layers import ConvBNReLU, ConvNormActivation, InvertedResidual, _make_divi
 
 
 class MobileNet_V2(nn.Module):
+    # pylint: disable=no-member
     def __init__(
         self,
         num_classes: int = 1000,

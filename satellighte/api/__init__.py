@@ -18,11 +18,18 @@ from ..core import (
 
 
 def available_models() -> list:
+    """
+    List of available models.
+
+    Returns:
+        list: List of available models.
+    """
+    # pylint: disable=E1136
     model_list = []
-    dict = _get_from_config_file("MODEL")
-    for arch in dict.keys():
-        for config in dict[arch].keys():
-            for dataset in dict[arch][config].keys():
+    dt = _get_from_config_file("MODEL")
+    for arch in dt.keys():
+        for config in dt[arch].keys():
+            for dataset in dt[arch][config].keys():
                 model_list.append(f"{arch}_{config}_{dataset}")
     return sorted(model_list)
 

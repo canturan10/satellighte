@@ -1,12 +1,9 @@
-from typing import Dict, List, Tuple, Union
-import random
 from typing import Dict, List
 
 import numpy as np
-from PIL import Image, ImageColor, ImageDraw, ImageFont
-
 import torch
 import torch.nn.functional as F
+from PIL import Image, ImageDraw, ImageFont
 
 
 def configure_batch(
@@ -25,6 +22,7 @@ def configure_batch(
     Returns:
         torch.Tensor: batched inputs as B x C x target_size x target_size
     """
+    # pylint: disable=no-member
 
     for i, img in enumerate(batch):
 
@@ -88,14 +86,14 @@ def convert_json(
 
 def visualize(img: np.ndarray, preds: List[Dict]) -> Image:
     """
-    Visualize detections
+    Virtualize the image with the predictions
 
     Args:
-        img (np.ndarray): 3 channel image
-        preds (List[Dict]): predictions
+        img (np.ndarray): 3 channel np.ndarray
+        preds (List[Dict]): Predictions. Each prediction is a dictionary with the label as key and the score as value
 
     Returns:
-        Image: 3 channel pil image
+        Image: 3 channel PIL Image that will be shown on screen
     """
     pil_img = Image.fromarray(img)
     pil_img = pil_img.resize((512, 512), Image.ANTIALIAS)

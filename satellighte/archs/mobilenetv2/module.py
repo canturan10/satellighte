@@ -15,6 +15,8 @@ class MobileNetV2(nn.Module):
     The network is the one described in arxiv.org/abs/1801.04381v4 .
     """
 
+    # pylint: disable=no-member
+
     __CONFIGS__ = {
         "default": {
             "input": {
@@ -107,6 +109,19 @@ class MobileNetV2(nn.Module):
         targets: List,
         hparams: Dict = {},
     ):
+        """
+        Compute the loss for the model.
+
+        Args:
+            logits (List[torch.Tensor]): _description_
+            targets (List): _description_
+            hparams (Dict, optional): _description_. Defaults to {}.
+
+        Raises:
+            ValueError: Unknown criterion
+
+        Returns:  Loss
+        """
         if hparams.get("criterion", "cross_entropy") == "cross_entropy":
             loss_fcn = nn.CrossEntropyLoss()
         else:
@@ -115,6 +130,18 @@ class MobileNetV2(nn.Module):
         return {"loss": loss_fcn(logits, targets)}
 
     def configure_optimizers(self, hparams: Dict):
+        """
+        Configure optimizers for the model.
+
+        Args:
+            hparams (Dict): Hyperparameters
+
+        Raises:
+            ValueError: Unknown optimizer
+            ValueError: Unknown scheduler
+
+        Returns: optimizers and scheduler
+        """
         hparams_optimizer = hparams.get("optimizer", "sgd")
         if hparams_optimizer == "sgd":
             optimizer = torch.optim.SGD(
@@ -138,13 +165,12 @@ class MobileNetV2(nn.Module):
         if hparams_scheduler == "steplr":
             scheduler = torch.optim.lr_scheduler.StepLR(
                 optimizer,
-                hparams.get("step_size", 4),
+                step_size=hparams.get("step_size", 4),
                 gamma=hparams.get("gamma", 0.5),
             )
         elif hparams_scheduler == "multisteplr":
             scheduler = torch.optim.lr_scheduler.MultiStepLR(
                 optimizer,
-                hparams.get("step_size", 4),
                 gamma=hparams.get("gamma", 0.5),
                 milestones=hparams.get("milestones", [500000, 1000000, 1500000]),
             )
