@@ -2,19 +2,20 @@ from typing import List, Dict, Tuple
 import copy
 
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 import numpy as np
 import imageio
 
 
 class BaseDataset(Dataset):
     # pylint: disable=no-member
+    # pylint: disable=not-callable
+
     def __init__(
         self,
         ids: List[str],
         targets: List[Dict],
         transforms=None,
-        *args,
         **kwargs,
     ):
         super().__init__()

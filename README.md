@@ -6,11 +6,11 @@
 
 <p align="center">
     <strong>
-        <a href="Project_Website">Website</a>
+        <a href="#">Website</a>
         •
-        <a href="Project_Docs">Docs</a>
+        <a href="#">Docs</a>
         •
-        <a href="Project_Demo">Demo</a>
+        <a href="#">Demo</a>
     </strong>
 </p>
 
@@ -60,16 +60,13 @@
 
 Before you begin, ensure you have met the following requirements:
 
-| requirement       | version  |
-| ----------------- | -------- |
-| imageio           | ~=2.15.0 |
-| numpy             | ~=1.22.2 |
-| pytorch_lightning | ~=1.5.10 |
-| scikit-learn      | ~=1.0.2  |
-| torchaudio        | ~=0.8.1  |
-| torchmetrics      | ~=0.7.1  |
-| torchvision       | ~=0.9.1  |
-| torch             | ~=1.8.1  |
+| requirement       | version  |     | requirement  | version |
+| ----------------- | -------- | --- | ------------ | ------- |
+| imageio           | ~=2.15.0 |     | torchaudio   | ~=0.8.1 |
+| numpy             | ~=1.22.2 |     | torchmetrics | ~=0.7.1 |
+| pytorch_lightning | ~=1.5.10 |     | torchvision  | ~=0.9.1 |
+| scikit-learn      | ~=1.0.2  |     | torch        | ~=1.8.1 |
+
 
 <!-- INSTALLATION -->
 ## Installation
@@ -92,9 +89,20 @@ pip install .
 <!-- USAGE EXAMPLES -->
 ## Usage Examples
 
-A few motivating and useful examples of how your project can be used. Spice this up with additional screenshots, code examples and demos.
+```python
+import imageio
+import satellighte as sat
 
-_For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_
+img = imageio.imread("test.jpg")
+
+model = sat.Classifier.from_pretrained("model_config_dataset")
+model.eval()
+
+results = model.predict(img)
+# [{'cls1': 0.55, 'cls2': 0.45}]
+```
+
+<!-- _For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_ -->
 
 <!-- TESTS -->
 ## Tests

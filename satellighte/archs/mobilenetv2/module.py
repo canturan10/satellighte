@@ -41,8 +41,6 @@ class MobileNetV2(nn.Module):
         self,
         config: Dict,
         labels: List[str] = None,
-        *args,
-        **kwargs,
     ):
         super().__init__()
         self.config = config
@@ -66,13 +64,34 @@ class MobileNetV2(nn.Module):
             )
 
     def forward(self, inputs):
+        """
+        Forward pass of the model.
+        """
         return self.backbone(inputs)
 
     def logits_to_preds(self, logits: List[torch.Tensor]):
+        """
+        Convert logits to predictions.
+        """
         return torch.softmax(logits, axis=-1)
 
     @classmethod
-    def build(cls, config: str = "", labels: List[str] = None, **kwargs) -> nn.Module:
+    def build(
+        cls,
+        config: str = "",
+        labels: List[str] = None,
+        **kwargs,
+    ) -> nn.Module:
+        """
+        Build the model with random weights.
+
+        Args:
+            config (str, optional): Configuration name. Defaults to "".
+            labels (List[str], optional): List of labels. Defaults to None.
+
+        Returns:
+            nn.Module: Model with random weights.
+        """
         # return model with random weight initialization
         labels = ["cls1", "cls2"] if labels is None else labels
 
@@ -90,16 +109,29 @@ class MobileNetV2(nn.Module):
         *args,
         **kwargs,
     ) -> nn.Module:
+        """
+        Load a model from a pre-trained model.
+
+        Args:
+            model_path (str): Path to the pre-trained model
+            config (str): Configuration of the model
+
+        Returns:
+            nn.Module: Model with pretrained weights
+        """
 
         *_, full_model_name, _ = model_path.split(os.path.sep)
 
-        st = torch.load(os.path.join(model_path, f"{full_model_name}.pth"))
+        s_dict = torch.load(os.path.join(model_path, f"{full_model_name}.pth"))
 
         model = cls(
-            config=MobileNetV2.__CONFIGS__[config], labels=st["labels"], *args, **kwargs
+            config=MobileNetV2.__CONFIGS__[config],
+            labels=s_dict["labels"],
+            *args,
+            **kwargs,
         )
 
-        model.load_state_dict(st["state_dict"], strict=True)
+        model.load_state_dict(s_dict["state_dict"], strict=True)
 
         return model
 
@@ -107,7 +139,7 @@ class MobileNetV2(nn.Module):
         self,
         logits: List[torch.Tensor],
         targets: List,
-        hparams: Dict = {},
+        hparams: Dict,
     ):
         """
         Compute the loss for the model.

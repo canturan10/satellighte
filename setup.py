@@ -29,7 +29,7 @@ extras_require = {
     "all": about.__requirements__ + test_require,
 }
 setuptools.setup(
-    name=about.__name__,
+    name=about.__pkg_name__,
     version=about.__version__,
     description=about.__description__,
     author=about.__author__,

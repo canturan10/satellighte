@@ -8,4 +8,4 @@ MODEL:
     default:
       eurosat:
         v0:
-          url: "https://drive.google.com/file/d/1EP3YBmJZkeLhg4KaCsQSAHVaaZusPurz"
+          url: "https://github.com/canturan10/satellighte/releases/download/v0.0.2/mobilenetv2_default_eurosat.pth"

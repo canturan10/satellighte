@@ -2,7 +2,6 @@ import errno
 import os
 import sys
 from typing import List
-from urllib.parse import urlparse
 
 from ..core import (
     _download_file_from_url,
@@ -25,16 +24,26 @@ def available_models() -> list:
         list: List of available models.
     """
     # pylint: disable=E1136
+
     model_list = []
-    dt = _get_from_config_file("MODEL")
-    for arch in dt.keys():
-        for config in dt[arch].keys():
-            for dataset in dt[arch][config].keys():
+    model_config = _get_from_config_file("MODEL")
+    for arch in model_config.keys():
+        for config in model_config[arch].keys():
+            for dataset in model_config[arch][config].keys():
                 model_list.append(f"{arch}_{config}_{dataset}")
     return sorted(model_list)
 
 
 def get_model_versions(model: str) -> list:
+    """
+    Get list of available versions for the given model.
+
+    Args:
+        model (str): Model name.
+
+    Returns:
+        list: List of available versions.
+    """
     model_dir = _get_model_dir()
     assert model in available_models(), f"given model: {model} not in the registry"
     model_path = os.path.join(model_dir, model)
@@ -47,10 +56,26 @@ def get_model_versions(model: str) -> list:
 
 
 def get_model_latest_version(model: str) -> int:
+    """
+    Get latest version of the given model.
+
+    Args:
+        model (str): Model name.
+
+    Returns:
+        int: Latest version.
+    """
     return max(get_model_versions(model))
 
 
 def get_saved_model(model: str, version: str):
+    """
+    Get saved model.
+
+    Args:
+        model (str): Model name.
+        version (str): Model version.
+    """
     model_dir = os.path.join(_get_model_dir(), model, str(version))
 
     info_dict = _get_model_info(model, version)
@@ -58,36 +83,45 @@ def get_saved_model(model: str, version: str):
 
     try:
         os.makedirs(model_dir)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
+    except OSError as os_error:
+        if os_error.errno != errno.EEXIST:
             raise
         # time.sleep might help here
-        pass
-
-    parts = urlparse(url)
-    filename_from_remote = os.path.basename(parts.path)
-    # filename, file_extension = os.path.splitext(filename_from_remote)
 
     cached_file = os.path.join(model_dir, model + ".pth")
 
     if not os.path.exists(cached_file):
-        sys.stderr.write('Downloading: "{}" to {}\n'.format(url, cached_file))
+        sys.stderr.write(f'Downloading: "{url}" to {cached_file}\n')
         _download_file_from_url(url, cached_file, progress=True)
 
     # ToDo: Make it for zip file
-    pass
 
 
 # APIs for Architecture
 
 
 def available_archs() -> List[str]:
+    """
+    List of available architectures.
+
+    Returns:
+        List[str]: List of available architectures.
+    """
     archs_dir = _get_arch_dir()
     dirs = _get_list_of_dirs(archs_dir)
     return sorted(dirs)
 
 
 def get_arch_configs(arch: str) -> List[str]:
+    """
+    List of available configurations for the given architecture.
+
+    Args:
+        arch (str): Architecture name.
+
+    Returns:
+        List[str]: List of available configurations.
+    """
     cls = _get_arch_cls(arch)
     configs = getattr(cls, "__CONFIGS__", {})
     return sorted(list(configs.keys()))

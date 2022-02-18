@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Union
 
 import numpy as np
 import pytorch_lightning as pl
@@ -15,6 +15,7 @@ class Classifier(pl.LightningModule):
     """Generic pl.LightningModule definition for image classification"""
 
     # pylint: disable=no-member
+    # pylint: disable=not-callable
 
     def __init__(
         self,
@@ -417,7 +418,6 @@ class Classifier(pl.LightningModule):
 
             batch.append(
                 # h,w,c => c,h,w
-                # pylint: disable=not-callable
                 torch.tensor(img, dtype=self.dtype, device=self.device).permute(2, 0, 1)
             )
 

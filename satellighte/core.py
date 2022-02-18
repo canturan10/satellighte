@@ -2,7 +2,7 @@ import importlib
 import os
 import shutil
 import tempfile
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 from urllib.request import urlopen
 
 import yaml
@@ -12,6 +12,12 @@ __PACKAGE_DIR__ = os.path.dirname(__file__)
 
 
 def _get_local_package_dir() -> str:
+    """
+    Get the path to the local package directory.
+
+    Returns:
+        str: Path to the local package directory.
+    """
     assert os.path.exists(
         __PACKAGE_DIR__
     ), f"package directory not found: {__PACKAGE_DIR__}"
@@ -19,6 +25,18 @@ def _get_local_package_dir() -> str:
 
 
 def _get_config_path(config_path=None) -> str:
+    """
+    Get the path to the config file.
+
+    Args:
+        config_path (_type_, optional): Path to the config file. Defaults to None.
+
+    Raises:
+        ValueError: If the config_path is not a valid path.
+
+    Returns:
+        str: Path to the config file.
+    """
     if config_path is None:
         config_path = os.path.join(__PACKAGE_DIR__, ".config.yaml")
     if not os.path.exists(config_path):
@@ -27,6 +45,15 @@ def _get_config_path(config_path=None) -> str:
 
 
 def _load_config_file(config_path=None) -> Dict:
+    """
+    Load the config file.
+
+    Args:
+        config_path (_type_, optional): Path to the config file. Defaults to None.
+
+    Returns:
+        Dict: The config file as a dictionary.
+    """
     yaml_path = _get_config_path(config_path)
     Loader = yaml.FullLoader
     with open(yaml_path, "r") as config_file:
@@ -36,6 +63,16 @@ def _load_config_file(config_path=None) -> Dict:
 
 
 def _get_from_config_file(key: str = None, cfg: Dict = None):
+    """
+    Get a value from the config file.
+
+    Args:
+        key (str, optional): Key to the config file. Defaults to None.
+        cfg (Dict, optional): Config file as a dictionary. Defaults to None.
+
+    Returns:
+        _type_: _description_
+    """
     if isinstance(key, type(None)):
         if isinstance(cfg, type(None)):
             cfg = _load_config_file()
@@ -52,6 +89,12 @@ def _get_from_config_file(key: str = None, cfg: Dict = None):
 
 
 def _get_model_dir() -> str:
+    """
+    Get the path to the model directory.
+
+    Returns:
+        str: Path to the model directory.
+    """
     model_registry_dir = os.path.join(
         _get_local_package_dir(), _get_from_config_file("PACKAGE.MODEL")
     )
@@ -62,6 +105,16 @@ def _get_model_dir() -> str:
 
 
 def _get_model_info(model_name, version) -> str:
+    """
+    Get the model info.
+
+    Args:
+        model_name (_type_): Model name.
+        version (_type_): Model version.
+
+    Returns:
+        str: Model info.
+    """
     # Get arch name and config name from the given model_name
     arch, config, dataset = _parse_saved_model_name(model_name)
 
@@ -71,6 +124,12 @@ def _get_model_info(model_name, version) -> str:
 
 
 def _get_arch_dir() -> str:
+    """
+    Get the path to the arch directory.
+
+    Returns:
+        str: Path to the arch directory.
+    """
     arch_registry_dir = os.path.join(
         _get_local_package_dir(), _get_from_config_file("PACKAGE.ARCH")
     )
@@ -81,12 +140,28 @@ def _get_arch_dir() -> str:
 
 
 def _get_arch_pkg(arch: str):
+    """
+    Get the architecture package.
+
+    Args:
+        arch (str): Architecture name.
+
+    Returns: Package containing the architecture.
+    """
     pkg_name = _get_from_config_file("PACKAGE.NAME")
     arch_postfix = _get_from_config_file("PACKAGE.ARCH")
     return importlib.import_module(".".join([pkg_name, arch_postfix, arch]))
 
 
 def _get_arch_cls(arch: str):
+    """
+    Get the architecture class.
+
+    Args:
+        arch (str): Architecture name.
+
+    Returns: Architecture class.
+    """
     arch_pkg = _get_arch_pkg(arch)
     for arch_name in dir(arch_pkg):
         if arch_name.lower() == arch:
@@ -94,6 +169,15 @@ def _get_arch_cls(arch: str):
 
 
 def _get_list_of_dirs(dir_path: str) -> list:
+    """
+    Get the list of directories in the given directory.
+
+    Args:
+        dir_path (str): Directory path.
+
+    Returns:
+        list: List of directories.
+    """
     return [
         d
         for d in os.listdir(dir_path)
@@ -102,6 +186,15 @@ def _get_list_of_dirs(dir_path: str) -> list:
 
 
 def _parse_saved_model_name(model: str) -> Tuple[str, str, str]:
+    """
+    Parse the saved model name.
+
+    Args:
+        model (str): Saved model name.
+
+    Returns:
+        Tuple[str, str, str]: Architecture name, config name, dataset name.
+    """
     arch = None
     config = None
     dataset = None
@@ -114,6 +207,14 @@ def _parse_saved_model_name(model: str) -> Tuple[str, str, str]:
 
 
 def _download_file_from_url(url, dst, progress=True):
+    """
+    Download a file from a url.
+
+    Args:
+        url (_type_): URL to download the file from.
+        dst (_type_): Destination path to save the file to.
+        progress (bool, optional): Show progress bar. Defaults to True.
+    """
 
     file_size = None
     u = urlopen(url)

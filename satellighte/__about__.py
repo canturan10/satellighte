@@ -21,19 +21,19 @@ def _load_requirements(
     with open(file_name, "r", encoding="utf-8") as file:
         lines = [ln.strip() for ln in file.readlines()]
     reqs = []
-    for ln in lines:
+    for line in lines:
 
         # Disregard comments
-        if comment_char in ln:
-            ln = ln[: ln.index(comment_char)].strip()
+        if comment_char in line:
+            line = line[: line.index(comment_char)].strip()
 
         # Disregard http or @http lines
-        if ln.startswith("http") or "@http" in ln:
+        if line.startswith("http") or "@http" in line:
             continue
 
         # Add the line to the list
-        if ln:
-            reqs.append(ln)
+        if line:
+            reqs.append(line)
     return reqs
 
 
@@ -62,7 +62,7 @@ __description__ = (
 __homepage__ = "https://github.com/canturan10/satellighte"
 __license__ = "MIT License"
 __long_description__ = _load_readme()
-__name__ = "satellighte"
+__pkg_name__ = "satellighte"
 __requirements__ = _load_requirements()
 __version__ = pkg_version
 
@@ -74,7 +74,7 @@ __all__ = [
     "__homepage__",
     "__license__",
     "__long_description__",
-    "__name__",
+    "__pkg_name__",
     "__requirements__",
     "__version__",
 ]

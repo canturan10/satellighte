@@ -68,6 +68,16 @@ def convert_json(
     preds: List[torch.Tensor],
     label: List[str],
 ) -> List[Dict]:
+    """
+    Convert the predictions to a json format
+
+    Args:
+        preds (List[torch.Tensor]): List of torch.Tensor
+        label (List[str]): List of labels
+
+    Returns:
+        List[Dict]: List of dictionaries with the label as key and the score as value
+    """
     outputs = []
     for scores in preds.cpu().numpy().tolist():
         output = {
