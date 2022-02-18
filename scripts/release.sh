@@ -26,10 +26,10 @@ new_version=$(python scripts/release.py get_version)
 git add .
 git commit -m "Incrementing working version to ${new_version} after ${old_version} release."
 
-# git tag -a v${new_version} -m "Releasing version v${new_version}"
+git tag -a v${new_version} -m "Releasing version v${new_version}"
 
-# echo ${new_version}
-# echo HEAD:${branch}
+echo ${new_version}
+echo HEAD:${branch}
 
 git push ${repository_url} v${new_version}
 
