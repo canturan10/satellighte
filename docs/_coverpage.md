@@ -1,6 +1,6 @@
 <!-- _coverpage.md -->
 
-![logo](/./src/satellighte.png)
+<!-- ![logo](/./src/satellighte.png) -->
 
 # Satellighte <small>0.0.2</small>
 
