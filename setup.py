@@ -24,8 +24,19 @@ test_require = [
     "pylint",
     "black",
 ]
+
+docs_require = [
+    "sphinxemoji",
+    "sphinx_rtd_theme",
+    "recommonmark",
+    "sphinx_markdown_tables",
+    "sphinxcontrib-napoleon",
+    "sphinx-autodoc-typehints",
+]
+
 extras_require = {
     "test": test_require,
+    "docs": docs_require,
     "all": about.__requirements__ + test_require,
 }
 setuptools.setup(
