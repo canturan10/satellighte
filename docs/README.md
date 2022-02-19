@@ -1,51 +1,3 @@
-<!-- PROJECT SUMMARY -->
-<p align="center">
-    <img width="100px" src="src/satellighte.png" align="center" alt="Satellighte" />
-<h2 align="center">Satellighte</h2>
-<h4 align="center">Satellite Image Classification</h4>
-
-<p align="center">
-    <strong>
-        <a href="https://canturan10.github.io/satellighte/">Website</a>
-        •
-        <a href="https://satellighte.readthedocs.io/">Docs</a>
-        •
-        <a href="#">Demo</a>
-    </strong>
-</p>
-
-<!-- TABLE OF CONTENTS -->
-<details>
-    <summary>
-        <strong>
-            TABLE OF CONTENTS
-        </strong>
-    </summary>
-    <ol>
-        <li>
-            <a href="#about-the-satellighte">About The Satellighte</a>
-        </li>
-        <li>
-            <a href="##prerequisites">Prerequisites</a>
-        </li>
-        <li>
-            <a href="#installation">Installation</a>
-            <ul>
-                <li><a href="#from-pypi">From Pypi</a></li>
-                <li><a href="#from-source">From Source</a></li>
-            </ul>
-        </li>
-        <li><a href="#usage-examples">Usage Examples</a></li>
-        <li><a href="#tests">Tests</a></li>
-        <li><a href="#contributing">Contributing</a></li>
-        <li><a href="#contributors">Contributors</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#license">License</a></li>
-        <li><a href="#references">References</a></li>
-        <li><a href="#citations">Citations</a></li>
-    </ol>
-</details>
-
 <!-- ABOUT THE PROJECT -->
 ## About The Satellighte
 
@@ -66,7 +18,6 @@ Before you begin, ensure you have met the following requirements:
 | numpy             | ~=1.22.2 |     | torchmetrics | ~=0.7.1 |
 | pytorch_lightning | ~=1.5.10 |     | torchvision  | ~=0.9.1 |
 | scikit-learn      | ~=1.0.2  |     | torch        | ~=1.8.1 |
-
 
 <!-- INSTALLATION -->
 ## Installation
@@ -89,20 +40,9 @@ pip install .
 <!-- USAGE EXAMPLES -->
 ## Usage Examples
 
-```python
-import imageio
-import satellighte as sat
+A few motivating and useful examples of how your project can be used. Spice this up with additional screenshots, code examples and demos.
 
-img = imageio.imread("test.jpg")
-
-model = sat.Classifier.from_pretrained("model_config_dataset")
-model.eval()
-
-results = model.predict(img)
-# [{'cls1': 0.55, 'cls2': 0.45}]
-```
-
-<!-- _For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_ -->
+_For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_
 
 <!-- TESTS -->
 ## Tests
