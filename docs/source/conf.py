@@ -41,13 +41,10 @@ extensions = [
     "nbsphinx",  # Integrate Jupyter Notebooks and Sphinx
     "IPython.sphinxext.ipython_console_highlighting",
     "sphinxemoji.sphinxemoji",
-    "sphinx.ext.autodoc",
     "sphinxcontrib.napoleon",
-    "sphinxemoji.sphinxemoji",
     "recommonmark",
     "sphinx_markdown_tables",
 ]
-
 autosummary_generate = True  # Turn on sphinx.ext.autosummary
 autoclass_content = "both"  # Add __init__ doc (ie. params) to class summaries
 html_show_sourcelink = (

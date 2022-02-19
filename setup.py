@@ -32,6 +32,7 @@ docs_require = [
     "sphinx_markdown_tables",
     "sphinxcontrib-napoleon",
     "sphinx-autodoc-typehints",
+    "nbsphinx",
 ]
 
 extras_require = {
