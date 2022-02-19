@@ -5,7 +5,7 @@ Before you begin, ensure you have met the following requirements:
 | requirement       | version  |
 | ----------------- | -------- |
 | imageio           | ~=2.15.0 |
-| numpy             | ~=1.22.2 |
+| numpy             | ~=1.21.0 |
 | pytorch_lightning | ~=1.5.10 |
 | scikit-learn      | ~=1.0.2  |
 | torchaudio        | ~=0.8.1  |

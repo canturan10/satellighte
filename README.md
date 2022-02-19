@@ -63,7 +63,7 @@ Before you begin, ensure you have met the following requirements:
 | requirement       | version  |     | requirement  | version |
 | ----------------- | -------- | --- | ------------ | ------- |
 | imageio           | ~=2.15.0 |     | torchaudio   | ~=0.8.1 |
-| numpy             | ~=1.22.2 |     | torchmetrics | ~=0.7.1 |
+| numpy             | ~=1.21.0 |     | torchmetrics | ~=0.7.1 |
 | pytorch_lightning | ~=1.5.10 |     | torchvision  | ~=0.9.1 |
 | scikit-learn      | ~=1.0.2  |     | torch        | ~=1.8.1 |
 
