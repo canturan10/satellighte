@@ -33,6 +33,7 @@ docs_require = [
     "sphinxcontrib-napoleon",
     "sphinx-autodoc-typehints",
     "nbsphinx",
+    "furo",
 ]
 
 extras_require = {
