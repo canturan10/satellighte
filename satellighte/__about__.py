@@ -61,6 +61,7 @@ __description__ = (
 )
 __homepage__ = "https://github.com/canturan10/satellighte"
 __license__ = "MIT License"
+__license_url__ = __homepage__ + "/blob/master/LICENSE"
 __long_description__ = _load_readme()
 __pkg_name__ = "satellighte"
 __requirements__ = _load_requirements()
@@ -73,6 +74,7 @@ __all__ = [
     "__description__",
     "__homepage__",
     "__license__",
+    "__license_url__",
     "__long_description__",
     "__pkg_name__",
     "__requirements__",
