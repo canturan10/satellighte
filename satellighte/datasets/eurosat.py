@@ -4,9 +4,9 @@ from typing import List, Tuple
 import numpy as np
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-from torchvision.datasets.utils import download_and_extract_archive
-
+from torchvision.datasets.utils import extract_archive
 from .base import BaseDataset
+from ..core import _download_file_from_url
 
 
 class EuroSAT(BaseDataset):
@@ -105,13 +105,15 @@ class EuroSAT(BaseDataset):
             return
 
         os.makedirs(self.root_dir, exist_ok=True)
-        download_and_extract_archive(
-            "https://drive.google.com/file/d/1_QZVrVVmybvY8_pJjCdnev9THLvS3739",
-            download_root=self.root_dir,
-            extract_root=self.root_dir,
-            filename="eurosat.zip",
+        _download_file_from_url(
+            "https://drive.google.com/u/0/uc?id=1_QZVrVVmybvY8_pJjCdnev9THLvS3739&export=download&confirm=t",
+            os.path.join(self.root_dir, "eurosat.zip"),
         )
-        os.remove(os.path.join(self.root_dir, "eurosat.zip"))
+        extract_archive(
+            os.path.join(self.root_dir, "eurosat.zip"),
+            self.root_dir,
+            remove_finished=True,
+        )
 
 
 if __name__ == "__main__":
