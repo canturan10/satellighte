@@ -1,9 +1,9 @@
 # DEPLOYMENTS <!-- omit in toc -->
 
 - [FastAPI](#fastapi)
-	- [Run BentoML Object Detection Service Locally](#run-bentoml-object-detection-service-locally)
+	- [Run AI Service](#run-ai-service)
 		- [Install Dependency](#install-dependency)
-		- [Run AI Service](#run-ai-service)
+		- [Run AI Service](#run-ai-service-1)
 	- [Build AI Service As Docker Image](#build-ai-service-as-docker-image)
 	- [Run AI Service As Docker Container](#run-ai-service-as-docker-container)
 
@@ -11,7 +11,7 @@
 
 [FastAPI](https://fastapi.tiangolo.com/) wraps the `Satellighte` library to serve as RESTful API
 
-### Run BentoML Object Detection Service Locally
+### Run AI Service
 
 From root directory of the repository run followings,
 
