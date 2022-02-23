@@ -16,9 +16,9 @@ def parse_arguments():
 
     arg.add_argument(
         "--device",
-        type=int,
-        default=1 if torch.cuda.is_available() else 0,
-        choices=[0, 1],
+        type=str,
+        default="cuda" if torch.cuda.is_available() else "cpu",
+        choices=["cuda", "cpu"],
         help="GPU device to use",
     )
     arg.add_argument(
@@ -47,6 +47,7 @@ def main(args):
     """
     model = sat.Classifier.from_pretrained("mobilenetv2_default_eurosat")
     model.eval()
+    model.to(args.device)
     img = imageio.imread(args.source)
     results = model.predict(img)
     pil_img = sat.utils.visualize(img, results)
