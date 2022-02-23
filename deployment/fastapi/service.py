@@ -1,30 +1,54 @@
 import argparse
+import sys
 from io import BytesIO
-from typing import Optional
-
+import torch
 import numpy as np
+import satellighte as sat
 import uvicorn
 from PIL import Image
-import sys
-from fastapi import FastAPI, File, Form, UploadFile
-from fastapi.responses import StreamingResponse, JSONResponse
-import satellighte as sat
 
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.openapi.utils import get_openapi
 
-
-app = FastAPI(
-    title="Satellighte API",
-    description=sat.__description__,
-    version=sat.__version__,
-    license_info={
-        "name": sat.__license__,
-        "url": sat.__license_url__,
+tags_metadata = [
+    {
+        "name": "Predict",
+        "description": "Satellighte is an image classification.",
+        "externalDocs": {
+            "description": "External docs for library",
+            "url": "https://satellighte.readthedocs.io/",
+        },
     },
-    contact={
-        "name": sat.__author__,
-    },
-)
+]
+
+app = FastAPI()
+
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="Satellighte API",
+        version=sat.__version__,
+        description=sat.__description__,
+        routes=app.routes,
+        tags=tags_metadata,
+        license_info={
+            "name": sat.__license__,
+            "url": sat.__license_url__,
+        },
+        contact={
+            "name": sat.__author__,
+        },
+    )
+    openapi_schema["info"]["x-logo"] = {
+        "url": "https://raw.githubusercontent.com/canturan10/readme-template/master/src/readme_template.png"
+    }
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
 
 
 @app.on_event("startup")
@@ -32,6 +56,13 @@ def load_artifacts():
     if not hasattr(app.state, "model"):
         app.state.model = sat.Classifier.from_pretrained("mobilenetv2_default_eurosat")
         app.state.model.eval()
+        app.state.model.to("cuda" if torch.cuda.is_available() else "cpu")
+
+
+@app.on_event("shutdown")
+def empty_cache():
+    # clear Cuda memory
+    torch.cuda.empty_cache()
 
 
 def read_imagefile(data) -> Image.Image:
@@ -39,18 +70,12 @@ def read_imagefile(data) -> Image.Image:
     return image
 
 
-@app.post("/")
-def image_filter(img: UploadFile = File(...)):
-    original_image = Image.open(img.file)
-
-    filtered_image = BytesIO()
-    original_image.save(filtered_image, "JPEG")
-    filtered_image.seek(0)
-
-    return StreamingResponse(filtered_image, media_type="image/jpeg")
+@app.get("/")
+def read_root():
+    return {"Satellighte API": f"version {sat.__version__}"}
 
 
-@app.post("/predict/")
+@app.post("/predict/", tags=["Predict"])
 async def predict(file: UploadFile = File(...)):
     if file.content_type.startswith("image/") is False:
         raise HTTPException(
@@ -59,27 +84,58 @@ async def predict(file: UploadFile = File(...)):
         )
 
     try:
-        import time
-
-        time.sleep(10)
         contents = await file.read()
         image = np.array(read_imagefile(contents).convert("RGB"))
         predicted_class = app.state.model.predict(image)
 
         return predicted_class
-    except Exception as error:
-        e = sys.exc_info()[1]
+    except Exception:
+        e_info = sys.exc_info()[1]
         raise HTTPException(
             status_code=500,
-            detail=str(e),
+            detail=str(e_info),
         )
 
 
 if __name__ == "__main__":
+    from pathlib import Path
 
-    parser = argparse.ArgumentParser(description="Runs the API locally.")
+    parser = argparse.ArgumentParser(description="Runs the API server.")
     parser.add_argument(
-        "--port", help="The port to listen for requests on.", type=int, default=8080
+        "--host",
+        type=str,
+        default="0.0.0.0",
+        help="Host to run the API on.",
     )
+    parser.add_argument(
+        "--port",
+        help="The port to listen for requests on.",
+        type=int,
+        default=8080,
+    )
+    parser.add_argument(
+        "--workers",
+        help="Number of workers to use.",
+        type=int,
+        default=1,
+    )
+    parser.add_argument(
+        "--reload",
+        help="Reload the model on each request.",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--use-colors",
+        help="Enable user-friendly color output.",
+        action="store_true",
+    )
+
     args = parser.parse_args()
-    uvicorn.run(app, host="0.0.0.0", port=args.port)
+    uvicorn.run(
+        f"{Path(__file__).stem}:app",
+        host=args.host,
+        port=args.port,
+        workers=args.workers,
+        reload=args.reload,
+        use_colors=args.use_colors,
+    )

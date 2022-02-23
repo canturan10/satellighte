@@ -37,6 +37,7 @@
         </li>
         <li><a href="#usage-examples">Usage Examples</a></li>
         <li><a href="#tests">Tests</a></li>
+        <li><a href="#deployments">Deployments</a></li>
         <li><a href="#contributing">Contributing</a></li>
         <li><a href="#contributors">Contributors</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -103,6 +104,11 @@ results = model.predict(img)
 ```
 
 <!-- _For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_ -->
+
+<!-- DEPLOYMENTS -->
+## Deployments
+
+_For more information, please refer to the [Deployment](deployment)_
 
 <!-- TESTS -->
 ## Tests
