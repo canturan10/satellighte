@@ -88,7 +88,7 @@ cd satellighte
 pip install .
 ```
 
-#### From SourceFor Development
+#### From Source For Development
 
 ```bash
 git clone https://github.com/canturan10/satellighte.git
@@ -115,6 +115,9 @@ results = model.predict(img)
 
 <!-- DEPLOYMENTS -->
 ## Deployments
+
+- [x] [FastAPI](deployment/README.md#fastapi)
+- [x] [ONNX](deployment/README.md#onnx)
 
 _For more information, please refer to the [Deployment](deployment)_
 
