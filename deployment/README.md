@@ -1,21 +1,23 @@
 # DEPLOYMENTS <!-- omit in toc -->
 
 - [FastAPI](#fastapi)
+	- [Install Dependency For FastAPI](#install-dependency-for-fastapi)
 	- [Run AI Service](#run-ai-service)
-		- [Install Dependency](#install-dependency)
-		- [Run AI Service](#run-ai-service-1)
-	- [Build AI Service As Docker Image](#build-ai-service-as-docker-image)
-	- [Run AI Service As Docker Container](#run-ai-service-as-docker-container)
+- [Build AI Service As Docker Image](#build-ai-service-as-docker-image)
+- [Run AI Service As Docker Container](#run-ai-service-as-docker-container)
+- [ONNX](#onnx)
+	- [Install Dependency For ONNX](#install-dependency-for-onnx)
+	- [Convert Model to ONNX](#convert-model-to-onnx)
+	- [ONNX Runtime](#onnx-runtime)
 
 ## FastAPI
 
 [FastAPI](https://fastapi.tiangolo.com/) wraps the `Satellighte` library to serve as RESTful API
 
-### Run AI Service
 
 From root directory of the repository run followings,
 
-#### Install Dependency
+### Install Dependency For FastAPI
 
 ```bash
 pip install fastapi==0.74.1
@@ -23,19 +25,13 @@ pip install "uvicorn[standard]"==0.17.5
 pip install python-multipart
 ```
 
-or
-
-```bash
-pip install -r deployment/fastapi/requirements.txt
-```
-
-#### Run AI Service
+### Run AI Service
 
 ```bash
 python deployment/fastapi/service.py
 ```
 
-### Build AI Service As Docker Image
+## Build AI Service As Docker Image
 
 From root directory of the repository run followings,
 
@@ -43,7 +39,7 @@ From root directory of the repository run followings,
 docker build -t satellighte-fastapi deployment/fastapi/
 ```
 
-### Run AI Service As Docker Container
+## Run AI Service As Docker Container
 
 if gpu enabled, run with
 
@@ -55,4 +51,29 @@ if gpu disabled, run with
 
 ```bash
 docker run -d --name satellighte-service --rm -p 8080:8080 satellighte-fastapi
+```
+
+## ONNX
+
+[ONNX Runtime](https://onnxruntime.ai/) inference can lead to faster customer experiences and lower costs.
+
+From root directory of the repository run followings,
+
+### Install Dependency For ONNX
+
+```bash
+pip install onnx~=1.11.0
+pip install onnxruntime~=1.10.0
+```
+
+### Convert Model to ONNX
+
+```bash
+python deployment/onnx/export.py
+```
+
+### ONNX Runtime
+
+```bash
+python deployment/onnx/runtime.py
 ```

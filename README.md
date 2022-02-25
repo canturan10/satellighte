@@ -87,6 +87,14 @@ git clone https://github.com/canturan10/satellighte.git
 cd satellighte
 pip install .
 ```
+
+#### From SourceFor Development
+
+```bash
+git clone https://github.com/canturan10/satellighte.git
+cd satellighte
+pip install -e ".[all]"
+```
 <!-- USAGE EXAMPLES -->
 ## Usage Examples
 

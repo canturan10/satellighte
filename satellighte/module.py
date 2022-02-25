@@ -31,7 +31,11 @@ class Classifier(pl.LightningModule):
 
     @property
     def input_size(self):
-        return self.model.config.get("input_size")
+        return self.model.config.get("input").get("input_size")
+
+    @property
+    def labels(self):
+        return self.model.labels
 
     # WARNING: This function should only be used during training. not inference
     def forward(
@@ -95,7 +99,7 @@ class Classifier(pl.LightningModule):
         preds = self.forward(batch)
 
         # Convert predictions to json format
-        json_preds = convert_json(preds, self.model.labels)
+        json_preds = convert_json(preds, self.labels)
         return json_preds
 
     @classmethod

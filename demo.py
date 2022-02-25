@@ -45,7 +45,7 @@ def main(args):
     Args:
         args : Parsed arguments
     """
-    model = sat.Classifier.from_pretrained("mobilenetv2_default_eurosat")
+    model = sat.Classifier.from_pretrained(args.model_name)
     model.eval()
     model.to(args.device)
     img = imageio.imread(args.source)

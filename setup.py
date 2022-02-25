@@ -25,6 +25,14 @@ test_require = [
     "black",
 ]
 
+deploy_require = [
+    "pytest>=6.0.0",
+    "pytest-pylint",
+    "pytest-cov",
+    "pylint",
+    "black",
+]
+
 docs_require = [
     "sphinxemoji",
     "sphinx_rtd_theme",
@@ -39,7 +47,8 @@ docs_require = [
 extras_require = {
     "test": test_require,
     "docs": docs_require,
-    "all": about.__requirements__ + test_require,
+    "deploy": about.__requirements__ + deploy_require,
+    "all": about.__requirements__ + test_require + deploy_require,
 }
 setuptools.setup(
     name=about.__pkg_name__,

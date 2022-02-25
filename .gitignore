@@ -2,6 +2,7 @@ lightning_logs/
 satellighte/datas/*
 *.pth
 *.pt
+*.onnx
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
