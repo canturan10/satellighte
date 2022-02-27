@@ -245,6 +245,28 @@ The references used in the development of the project are as follows.
 }
 ```
 
+```bibtex
+@article{DBLP:journals/corr/abs-1801-04381,
+  author    = {Mark Sandler and
+               Andrew G. Howard and
+               Menglong Zhu and
+               Andrey Zhmoginov and
+               Liang{-}Chieh Chen},
+  title     = {Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification,
+               Detection and Segmentation},
+  journal   = {CoRR},
+  volume    = {abs/1801.04381},
+  year      = {2018},
+  url       = {http://arxiv.org/abs/1801.04381},
+  archivePrefix = {arXiv},
+  eprint    = {1801.04381},
+  timestamp = {Tue, 12 Jan 2021 15:30:06 +0100},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1801-04381.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
 Give a ⭐️ if this project helped you!
 ![-----------------------------------------------------](https://raw.githubusercontent.com/canturan10/readme-template/master/src/colored_4b.png)
+
 _This readme file is made using the [readme-template](https://github.com/canturan10/readme-template)_
