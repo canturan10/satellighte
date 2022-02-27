@@ -1,7 +1,10 @@
 import time
 from typing import List
+import os
 
 from satellighte.version import __version__ as pkg_version
+
+_PATH_ROOT = os.path.join(os.path.dirname(__file__), "..")
 
 
 def _load_requirements(
@@ -18,7 +21,7 @@ def _load_requirements(
         List[str]: List of requirements.
     """
     # Open the file
-    with open(file_name, "r", encoding="utf-8") as file:
+    with open(os.path.join(_PATH_ROOT, file_name), "r", encoding="utf-8") as file:
         lines = [ln.strip() for ln in file.readlines()]
     reqs = []
     for line in lines:
@@ -47,9 +50,10 @@ def _load_readme(file_name: str = "README.md") -> str:
     Returns:
         str: Readme text.
     """
-    text = open(file_name, "r", encoding="utf-8").read()
+    with open(os.path.join(_PATH_ROOT, file_name), "r", encoding="utf-8") as file:
+        readme = file.read()
 
-    return text
+    return readme
 
 
 _this_year = time.strftime("%Y")

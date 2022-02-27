@@ -1,14 +1,11 @@
 <!-- _coverpage.md -->
 
-<!-- ![logo](/./src/satellighte.png) -->
+<p align="center">
+    <img width="100px" src="https://raw.githubusercontent.com/canturan10/satellighte/master/src/satellighte.png" align="center" alt="Satellighte" />
 
-# Satellighte <small>0.0.2</small>
+# Satellighte <small>2022</small>
 
 > Satellite Image Classification
-<!--  -->
-<!-- - Simple and lightweight -->
-<!-- - No statically built html files -->
-<!-- - Multiple themes -->
 
 [GitHub](https://github.com/canturan10/satellighte/)
 [Docs](https://satellighte.readthedocs.io/)

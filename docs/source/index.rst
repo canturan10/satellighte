@@ -9,8 +9,7 @@
 **Version**: |release|
 
 .. toctree::
-   :maxdepth: 1
-   :hidden:
+   :maxdepth: 4
    :name: starter
    :caption: Getting Started
 
@@ -20,9 +19,18 @@
 
 .. toctree::
    :maxdepth: 1
-   :hidden:
    :name: api
    :caption: Satellighte API
 
+   api/api.rst
    api/module.rst
    api/datasets.rst
+
+.. toctree::
+   :maxdepth: 1
+   :name: deployment
+   :caption: Deployment
+
+   deployment/fastapi.rst
+   deployment/onnx_export.rst
+   deployment/onnx_runtime.rst
