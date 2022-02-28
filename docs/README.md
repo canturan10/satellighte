@@ -14,42 +14,6 @@
     </strong>
 </p>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-    <summary>
-        <strong>
-            TABLE OF CONTENTS
-        </strong>
-    </summary>
-    <ol>
-        <li>
-            <a href="#about-the-satellighte">About The Satellighte</a>
-        </li>
-        <li>
-            <a href="##prerequisites">Prerequisites</a>
-        </li>
-        <li>
-            <a href="#installation">Installation</a>
-            <ul>
-                <li><a href="#from-pypi">From Pypi</a></li>
-                <li><a href="#from-source">From Source</a></li>
-            </ul>
-        </li>
-        <li><a href="#usage-examples">Usage Examples</a></li>
-        <li><a href="#architectures">Architectures</a></li>
-        <li><a href="#datasets">Datasets</a></li>
-        <li><a href="#deployments">Deployments</a></li>
-        <li><a href="#training">Training</a></li>
-        <li><a href="#tests">Tests</a></li>
-        <li><a href="#contributing">Contributing</a></li>
-        <li><a href="#contributors">Contributors</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#license">License</a></li>
-        <li><a href="#references">References</a></li>
-        <li><a href="#citations">Citations</a></li>
-    </ol>
-</details>
-
 <!-- ABOUT THE PROJECT -->
 ## About The Satellighte
 

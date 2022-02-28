@@ -1,9 +1,43 @@
 import os
 from importlib.util import module_from_spec, spec_from_file_location
+from typing import List
 
 import setuptools
 
 _PATH_ROOT = os.path.dirname(__file__)
+
+
+def _load_requirements(
+    file_name: str = "requirements.txt", comment_char: str = "#"
+) -> List[str]:
+    """
+    Load requirements from a text file.
+
+    Args:
+        file_name (str, optional): File name. Defaults to "requirements.txt".
+        comment_char (str, optional): Disregard lines starting with this character. Defaults to "#".
+
+    Returns:
+        List[str]: List of requirements.
+    """
+    # Open the file
+    with open(os.path.join(_PATH_ROOT, file_name), "r", encoding="utf-8") as file:
+        lines = [ln.strip() for ln in file.readlines()]
+    reqs = []
+    for line in lines:
+
+        # Disregard comments
+        if comment_char in line:
+            line = line[: line.index(comment_char)].strip()
+
+        # Disregard http or @http lines
+        if line.startswith("http") or "@http" in line:
+            continue
+
+        # Add the line to the list
+        if line:
+            reqs.append(line)
+    return reqs
 
 
 def _load_py_module(fname, pkg="satellighte"):
@@ -16,6 +50,8 @@ def _load_py_module(fname, pkg="satellighte"):
 
 
 about = _load_py_module("__about__.py")
+
+__requirements__ = _load_requirements()
 
 test_require = [
     "pytest>=6.0.0",
@@ -47,8 +83,8 @@ docs_require = [
 extras_require = {
     "test": test_require,
     "docs": docs_require,
-    "deploy": about.__requirements__ + deploy_require,
-    "all": about.__requirements__ + test_require + deploy_require,
+    "deploy": __requirements__ + deploy_require,
+    "all": __requirements__ + test_require + deploy_require,
 }
 setuptools.setup(
     name=about.__pkg_name__,
@@ -65,7 +101,7 @@ setuptools.setup(
     python_requires=">=3.7",
     extras_require=extras_require,
     setup_requires=[],
-    install_requires=about.__requirements__,
+    install_requires=__requirements__,
     classifiers=[
         # Indicate who your project is intended for
         "Topic :: Scientific/Engineering :: Artificial Intelligence",

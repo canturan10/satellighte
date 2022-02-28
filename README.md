@@ -1,6 +1,6 @@
 <!-- PROJECT SUMMARY -->
 <p align="center">
-    <img width="100px" src="src/satellighte.png" align="center" alt="Satellighte" />
+    <img width="100px" src="https://raw.githubusercontent.com/canturan10/satellighte/master/src/satellighte.png" align="center" alt="Satellighte" />
 <h2 align="center">Satellighte</h2>
 <h4 align="center">Satellite Image Classification</h4>
 
