@@ -1,43 +1,9 @@
 import time
-from typing import List
 import os
 
 from satellighte.version import __version__ as pkg_version
 
 _PATH_ROOT = os.path.join(os.path.dirname(__file__), "..")
-
-
-def _load_requirements(
-    file_name: str = "requirements.txt", comment_char: str = "#"
-) -> List[str]:
-    """
-    Load requirements from a text file.
-
-    Args:
-        file_name (str, optional): File name. Defaults to "requirements.txt".
-        comment_char (str, optional): Disregard lines starting with this character. Defaults to "#".
-
-    Returns:
-        List[str]: List of requirements.
-    """
-    # Open the file
-    with open(os.path.join(_PATH_ROOT, file_name), "r", encoding="utf-8") as file:
-        lines = [ln.strip() for ln in file.readlines()]
-    reqs = []
-    for line in lines:
-
-        # Disregard comments
-        if comment_char in line:
-            line = line[: line.index(comment_char)].strip()
-
-        # Disregard http or @http lines
-        if line.startswith("http") or "@http" in line:
-            continue
-
-        # Add the line to the list
-        if line:
-            reqs.append(line)
-    return reqs
 
 
 def _load_readme(file_name: str = "README.md") -> str:
@@ -68,7 +34,6 @@ __license__ = "MIT License"
 __license_url__ = __homepage__ + "/blob/master/LICENSE"
 __long_description__ = _load_readme()
 __pkg_name__ = "satellighte"
-__requirements__ = _load_requirements()
 __version__ = pkg_version
 
 __all__ = [
@@ -81,6 +46,5 @@ __all__ = [
     "__license_url__",
     "__long_description__",
     "__pkg_name__",
-    "__requirements__",
     "__version__",
 ]
