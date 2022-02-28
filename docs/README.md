@@ -1,3 +1,55 @@
+<!-- PROJECT SUMMARY -->
+<p align="center">
+    <img width="100px" src="src/satellighte.png" align="center" alt="Satellighte" />
+<h2 align="center">Satellighte</h2>
+<h4 align="center">Satellite Image Classification</h4>
+
+<p align="center">
+    <strong>
+        <a href="https://canturan10.github.io/satellighte/">Website</a>
+        •
+        <a href="https://satellighte.readthedocs.io/">Docs</a>
+        •
+        <a href="#">Demo</a>
+    </strong>
+</p>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+    <summary>
+        <strong>
+            TABLE OF CONTENTS
+        </strong>
+    </summary>
+    <ol>
+        <li>
+            <a href="#about-the-satellighte">About The Satellighte</a>
+        </li>
+        <li>
+            <a href="##prerequisites">Prerequisites</a>
+        </li>
+        <li>
+            <a href="#installation">Installation</a>
+            <ul>
+                <li><a href="#from-pypi">From Pypi</a></li>
+                <li><a href="#from-source">From Source</a></li>
+            </ul>
+        </li>
+        <li><a href="#usage-examples">Usage Examples</a></li>
+        <li><a href="#architectures">Architectures</a></li>
+        <li><a href="#datasets">Datasets</a></li>
+        <li><a href="#deployments">Deployments</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#tests">Tests</a></li>
+        <li><a href="#contributing">Contributing</a></li>
+        <li><a href="#contributors">Contributors</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#license">License</a></li>
+        <li><a href="#references">References</a></li>
+        <li><a href="#citations">Citations</a></li>
+    </ol>
+</details>
+
 <!-- ABOUT THE PROJECT -->
 ## About The Satellighte
 
@@ -12,12 +64,13 @@
 
 Before you begin, ensure you have met the following requirements:
 
-| requirement       | version  |     | requirement  | version |
-| ----------------- | -------- | --- | ------------ | ------- |
-| imageio           | ~=2.15.0 |     | torchaudio   | ~=0.8.1 |
-| numpy             | ~=1.21.0 |     | torchmetrics | ~=0.7.1 |
-| pytorch_lightning | ~=1.5.10 |     | torchvision  | ~=0.9.1 |
-| scikit-learn      | ~=1.0.2  |     | torch        | ~=1.8.1 |
+| requirement       | version  |
+| ----------------- | -------- |
+| imageio           | ~=2.15.0 |
+| numpy             | ~=1.21.0 |
+| pytorch_lightning | ~=1.5.10 |
+| scikit-learn      | ~=1.0.2  |
+| torch             | ~=1.8.1  |
 
 <!-- INSTALLATION -->
 ## Installation
@@ -37,12 +90,76 @@ git clone https://github.com/canturan10/satellighte.git
 cd satellighte
 pip install .
 ```
+
+#### From Source For Development
+
+```bash
+git clone https://github.com/canturan10/satellighte.git
+cd satellighte
+pip install -e ".[all]"
+```
 <!-- USAGE EXAMPLES -->
 ## Usage Examples
 
-A few motivating and useful examples of how your project can be used. Spice this up with additional screenshots, code examples and demos.
+```python
+import imageio
+import satellighte as sat
 
-_For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_
+img = imageio.imread("test.jpg")
+
+model = sat.Classifier.from_pretrained("model_config_dataset")
+model.eval()
+
+results = model.predict(img)
+# [{'cls1': 0.55, 'cls2': 0.45}]
+```
+
+<!-- _For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_ -->
+
+<!-- ARCHITECTURES -->
+## Architectures
+
+- [x] [MobileNetV2](satellighte/archs/README.md#MobileNetV2)
+- [ ] [EfficientDet](satellighte/archs/README.md)
+- [ ] [ResNet](satellighte/archs/README.md)
+- [ ] [CoAtNet](satellighte/archs/README.md)
+
+_For more information, please refer to the [Architectures](archs.md)_
+
+<!-- DATASETS -->
+## Datasets
+
+- [x] [EuroSAT](satellighte/datasets/README.md#EuroSAT)
+- [ ] [RESISC45](satellighte/datasets/README.md)
+
+_For more information, please refer to the [Datasets](datasets.md)_
+
+<!-- DEPLOYMENTS -->
+## Deployments
+
+- [x] [FastAPI](deployment/README.md#fastapi)
+- [x] [ONNX](deployment/README.md#onnx)
+- [ ] [BentoML](deployment/README.md)
+- [ ] [DeepSparse](deployment/README.md)
+
+_For more information, please refer to the [Deployment](deployment.md)_
+
+<!-- TRAINING -->
+## Training
+
+To training, follow these steps:
+
+For installing Satellighte, please refer to the [Installation](#installation).
+
+```bash
+python training/eurosat_training.py
+```
+
+For optional arguments,
+
+```bash
+python training/eurosat_training.py --help
+```
 
 <!-- TESTS -->
 ## Tests
@@ -168,6 +285,28 @@ The references used in the development of the project are as follows.
 }
 ```
 
+```bibtex
+@article{DBLP:journals/corr/abs-1801-04381,
+  author    = {Mark Sandler and
+               Andrew G. Howard and
+               Menglong Zhu and
+               Andrey Zhmoginov and
+               Liang{-}Chieh Chen},
+  title     = {Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification,
+               Detection and Segmentation},
+  journal   = {CoRR},
+  volume    = {abs/1801.04381},
+  year      = {2018},
+  url       = {http://arxiv.org/abs/1801.04381},
+  archivePrefix = {arXiv},
+  eprint    = {1801.04381},
+  timestamp = {Tue, 12 Jan 2021 15:30:06 +0100},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1801-04381.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
 Give a ⭐️ if this project helped you!
 ![-----------------------------------------------------](https://raw.githubusercontent.com/canturan10/readme-template/master/src/colored_4b.png)
+
 _This readme file is made using the [readme-template](https://github.com/canturan10/readme-template)_

@@ -1,15 +1,5 @@
 # Deployments <!-- omit in toc -->
 
-- [FastAPI](#fastapi)
-	- [Install Dependency For FastAPI](#install-dependency-for-fastapi)
-	- [Run AI Service](#run-ai-service)
-- [Build AI Service As Docker Image](#build-ai-service-as-docker-image)
-- [Run AI Service As Docker Container](#run-ai-service-as-docker-container)
-- [ONNX](#onnx)
-	- [Install Dependency For ONNX](#install-dependency-for-onnx)
-	- [Convert Model to ONNX](#convert-model-to-onnx)
-	- [ONNX Runtime](#onnx-runtime)
-
 ## FastAPI
 
 [FastAPI](https://fastapi.tiangolo.com/) wraps the `Satellighte` library to serve as RESTful API

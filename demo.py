@@ -48,6 +48,8 @@ def main(args):
     model = sat.Classifier.from_pretrained(args.model_name)
     model.eval()
     model.to(args.device)
+    # print(model.summarize(max_depth=1))
+
     img = imageio.imread(args.source)
     results = model.predict(img)
     pil_img = sat.utils.visualize(img, results)

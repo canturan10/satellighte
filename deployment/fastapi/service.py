@@ -42,7 +42,7 @@ def custom_openapi():
         },
     )
     openapi_schema["info"]["x-logo"] = {
-        "url": "https://raw.githubusercontent.com/canturan10/readme-template/master/src/readme_template.png"
+        "url": "https://raw.githubusercontent.com/canturan10/satellighte/master/src/satellighte.png"
     }
     app.openapi_schema = openapi_schema
     return app.openapi_schema

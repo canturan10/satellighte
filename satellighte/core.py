@@ -98,9 +98,9 @@ def _get_model_dir() -> str:
     model_registry_dir = os.path.join(
         _get_local_package_dir(), _get_from_config_file("PACKAGE.MODEL")
     )
-    assert os.path.exists(
-        model_registry_dir
-    ), f"model directory not found: {model_registry_dir}"
+    if not os.path.exists(model_registry_dir):
+        os.makedirs(model_registry_dir)
+
     return model_registry_dir
 
 
