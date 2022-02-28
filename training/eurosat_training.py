@@ -230,7 +230,10 @@ def main(args):
     trainer = pl.Trainer(
         default_root_dir=".",  # Default path for logs and weights
         accumulate_grad_batches=4,  # Accumulates grads every k batches
-        callbacks=[checkpoint_callback],  # Callback for checkpointing
+        callbacks=[
+            checkpoint_callback,
+            pl.callbacks.RichProgressBar(),
+        ],  # Callback for checkpointing
         gpus=args.device,  # GPU device
         max_epochs=args.max_epoch,  # Stop training once this number of epochs is reached
         check_val_every_n_epoch=1,  # Check validation every n train epochs.

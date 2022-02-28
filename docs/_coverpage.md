@@ -7,6 +7,6 @@
 
 > Satellite Image Classification
 
-[GitHub](https://github.com/canturan10/satellighte/)
-[Docs](https://satellighte.readthedocs.io/)
+[Documentation](https://satellighte.readthedocs.io/)
+[Demo](https://github.com/canturan10/satellighte/)
 [Get Started](#about-the-satellighte)

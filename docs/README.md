@@ -14,6 +14,42 @@
     </strong>
 </p>
 
+<!-- TABLE OF CONTENTS -->
+<details>
+    <summary>
+        <strong>
+            TABLE OF CONTENTS
+        </strong>
+    </summary>
+    <ol>
+        <li>
+            <a href="#about-the-satellighte">About The Satellighte</a>
+        </li>
+        <li>
+            <a href="##prerequisites">Prerequisites</a>
+        </li>
+        <li>
+            <a href="#installation">Installation</a>
+            <ul>
+                <li><a href="#from-pypi">From Pypi</a></li>
+                <li><a href="#from-source">From Source</a></li>
+            </ul>
+        </li>
+        <li><a href="#usage-examples">Usage Examples</a></li>
+        <li><a href="#architectures">Architectures</a></li>
+        <li><a href="#datasets">Datasets</a></li>
+        <li><a href="#deployments">Deployments</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#tests">Tests</a></li>
+        <li><a href="#contributing">Contributing</a></li>
+        <li><a href="#contributors">Contributors</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#license">License</a></li>
+        <li><a href="#references">References</a></li>
+        <li><a href="#citations">Citations</a></li>
+    </ol>
+</details>
+
 <!-- ABOUT THE PROJECT -->
 ## About The Satellighte
 
@@ -28,13 +64,13 @@
 
 Before you begin, ensure you have met the following requirements:
 
-| requirement       | version  |     | requirement  | version |
-| ----------------- | -------- | --- | ------------ | ------- |
-| imageio           | ~=2.15.0 |     | torchaudio   | ~=0.8.1 |
-| numpy             | ~=1.21.0 |     | torchmetrics | ~=0.7.1 |
-| pytorch_lightning | ~=1.5.10 |     | torchvision  | ~=0.9.1 |
-| scikit-learn      | ~=1.0.2  |     | torch        | ~=1.8.1 |
-
+| requirement       | version  |
+| ----------------- | -------- |
+| imageio           | ~=2.15.0 |
+| numpy             | ~=1.21.0 |
+| pytorch_lightning | ~=1.5.10 |
+| scikit-learn      | ~=1.0.2  |
+| torch             | ~=1.8.1  |
 
 <!-- INSTALLATION -->
 ## Installation
@@ -80,13 +116,50 @@ results = model.predict(img)
 
 <!-- _For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_ -->
 
+<!-- ARCHITECTURES -->
+## Architectures
+
+- [x] [MobileNetV2](satellighte/archs/README.md#MobileNetV2)
+- [ ] [EfficientDet](satellighte/archs/README.md)
+- [ ] [ResNet](satellighte/archs/README.md)
+- [ ] [CoAtNet](satellighte/archs/README.md)
+
+_For more information, please refer to the [Architectures](archs.md)_
+
+<!-- DATASETS -->
+## Datasets
+
+- [x] [EuroSAT](satellighte/datasets/README.md#EuroSAT)
+- [ ] [RESISC45](satellighte/datasets/README.md)
+
+_For more information, please refer to the [Datasets](datasets.md)_
+
 <!-- DEPLOYMENTS -->
 ## Deployments
 
 - [x] [FastAPI](deployment/README.md#fastapi)
 - [x] [ONNX](deployment/README.md#onnx)
+- [ ] [BentoML](deployment/README.md)
+- [ ] [DeepSparse](deployment/README.md)
 
-_For more information, please refer to the [Deployment](deployment)_
+_For more information, please refer to the [Deployment](deployment.md)_
+
+<!-- TRAINING -->
+## Training
+
+To training, follow these steps:
+
+For installing Satellighte, please refer to the [Installation](#installation).
+
+```bash
+python training/eurosat_training.py
+```
+
+For optional arguments,
+
+```bash
+python training/eurosat_training.py --help
+```
 
 <!-- TESTS -->
 ## Tests
