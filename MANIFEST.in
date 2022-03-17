@@ -1,2 +1,3 @@
 include satellighte/.config.yaml
 include requirements.txt
+recursive-include satellighte/models *
