@@ -14,10 +14,8 @@ def write_version_file(major: int, minor: int, patch: int):
     # pylint: disable=unspecified-encoding
 
     version = f'__version__ = "{major}.{minor}.{patch}"'
-    print(version)
     with open(pkg.__file__, "w") as version_file:
         version_file.write(version)
-        print(version)
 
 
 def inc_patch():

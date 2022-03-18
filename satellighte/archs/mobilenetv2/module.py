@@ -122,7 +122,9 @@ class MobileNetV2(nn.Module):
 
         *_, full_model_name, _ = model_path.split(os.path.sep)
 
-        s_dict = torch.load(os.path.join(model_path, f"{full_model_name}.pth"))
+        s_dict = torch.load(
+            os.path.join(model_path, f"{full_model_name}.pth"), map_location="cpu"
+        )
 
         model = cls(
             config=MobileNetV2.__CONFIGS__[config],
