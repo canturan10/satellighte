@@ -15,8 +15,16 @@ tags_metadata = [
         "name": "Predict",
         "description": "Satellighte is an image classification.",
         "externalDocs": {
-            "description": "External docs for library",
+            "description": "External Docs for Library: ",
             "url": "https://satellighte.readthedocs.io/",
+        },
+    },
+    {
+        "name": "Information",
+        "description": "Information about the library and the service.",
+        "externalDocs": {
+            "description": "Project Homepage: ",
+            "url": "https://canturan10.github.io/satellighte/",
         },
     },
 ]
@@ -70,9 +78,13 @@ def read_imagefile(data) -> Image.Image:
     return image
 
 
-@app.get("/")
+@app.get("/", tags=["Information"])
 def read_root():
-    return {"Satellighte API": f"version {sat.__version__}"}
+    return {
+        "Satellighte": f"{sat.__version__}",
+        "Description": f"{sat.__description__}",
+        "Author": f"{sat.__author__}",
+    }
 
 
 @app.post("/predict/", tags=["Predict"])
