@@ -2,8 +2,9 @@ import argparse
 
 import imageio
 import torch
-
+import os
 import satellighte as sat
+import time
 
 
 def parse_arguments():
@@ -33,7 +34,7 @@ def parse_arguments():
         "-s",
         type=str,
         required=True,
-        help="Path to the image file",
+        help="Path to the image file or directory",
     )
     return arg.parse_args()
 
@@ -50,11 +51,23 @@ def main(args):
     model.to(args.device)
     # print(model.summarize(max_depth=1))
 
-    img = imageio.imread(args.source)
-    results = model.predict(img)
-    pil_img = sat.utils.visualize(img, results)
-    pil_img.show()
-    print(results)
+    if os.path.isdir(args.source):
+        for file in os.listdir(args.source):
+            file_path = os.path.join(args.source, file)
+            if os.path.isfile(file_path):
+                img = imageio.imread(file_path)
+                results = model.predict(img)
+                pil_img = sat.utils.visualize(img, results)
+                pil_img.show()
+                print(results)
+                time.sleep(1)
+    else:
+        if os.path.isfile(args.source):
+            img = imageio.imread(args.source)
+            results = model.predict(img)
+            pil_img = sat.utils.visualize(img, results)
+            pil_img.show()
+            print(results)
 
 
 if __name__ == "__main__":

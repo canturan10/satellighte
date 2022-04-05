@@ -10,7 +10,7 @@
         •
         <a href="https://satellighte.readthedocs.io/">Docs</a>
         •
-        <a href="#">Demo</a>
+        <a href="https://share.streamlit.io/canturan10/satellighte-streamlit/app.py">Demo</a>
     </strong>
 </p>
 
