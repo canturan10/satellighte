@@ -1,6 +1,6 @@
 <!-- PROJECT SUMMARY -->
 <p align="center">
-    <img width="100px" src="src/satellighte.png" align="center" alt="Satellighte" />
+    <img width="100px" src="https://raw.githubusercontent.com/canturan10/satellighte/master/src/satellighte.png" align="center" alt="Satellighte" />
 <h2 align="center">Satellighte</h2>
 <h4 align="center">Satellite Image Classification</h4>
 
@@ -88,7 +88,7 @@ results = model.predict(img)
 - [ ] [ResNet](satellighte/archs/README.md)
 - [ ] [CoAtNet](satellighte/archs/README.md)
 
-_For more information, please refer to the [Architectures](archs.md)_
+_For more information, please refer to the [Architectures](satellighte/archs)_
 
 <!-- DATASETS -->
 ## Datasets
@@ -96,7 +96,7 @@ _For more information, please refer to the [Architectures](archs.md)_
 - [x] [EuroSAT](satellighte/datasets/README.md#EuroSAT)
 - [ ] [RESISC45](satellighte/datasets/README.md)
 
-_For more information, please refer to the [Datasets](datasets.md)_
+_For more information, please refer to the [Datasets](satellighte/datasets)_
 
 <!-- DEPLOYMENTS -->
 ## Deployments
@@ -106,7 +106,7 @@ _For more information, please refer to the [Datasets](datasets.md)_
 - [ ] [BentoML](deployment/README.md)
 - [ ] [DeepSparse](deployment/README.md)
 
-_For more information, please refer to the [Deployment](deployment.md)_
+_For more information, please refer to the [Deployment](deployment)_
 
 <!-- TRAINING -->
 ## Training
