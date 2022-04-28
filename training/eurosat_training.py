@@ -73,7 +73,7 @@ def parse_arguments():
     arg.add_argument(
         "--seed",
         type=int,
-        default=42,
+        default=13,
         help="Seed for reproducibility",
     )
 
@@ -89,13 +89,13 @@ def parse_arguments():
         "--optimizer",
         type=str,
         default="sgd",
-        choices=["sgd", "adam"],
+        choices=["sgd", "adam", "adamw"],
         help="Optimizer to use for training",
     )
     arg.add_argument(
         "--learning_rate",
         type=float,
-        default=0.01,
+        default=1e-2,
         help="Learning rate for training",
     )
     arg.add_argument(
@@ -107,7 +107,7 @@ def parse_arguments():
     arg.add_argument(
         "--weight_decay",
         type=float,
-        default=5e-4,
+        default=3e-4,
         help="Weight decay for training",
     )
     arg.add_argument(
@@ -157,23 +157,55 @@ def main(args):
     Args:
         args : Parsed arguments
     """
+
     # Set seed for reproducibility
-    pl.seed_everything(args.seed)
+    pl.seed_everything(args.seed, workers=True)
 
     # Build transforms for training and validation
-    # train_transforms = tt.transforms.Compose(
-    # tt.transforms.RandomHorizontalFlip(p=0.5),
-    # )
+    train_tt = tt.Compose(
+        [
+            tt.Resize(224),
+            tt.ColorJitter(
+                brightness=0.25,
+                contrast=0.25,
+                saturation=0.2,
+                hue=0.1,
+            ),
+            tt.RandomHorizontalFlip(
+                p=0.5,
+            ),
+            tt.RandomRotation(
+                degrees=2,
+            ),
+            tt.GaussianBlur(
+                kernel_size=(5, 9),
+                sigma=(0.1, 5),
+            ),
+            tt.RandomPerspective(
+                distortion_scale=0.1,
+                p=0.2,
+            ),
+            tt.RandomPosterize(
+                bits=2,
+            ),
+        ]
+    )
+    val_tt = tt.Compose(
+        [
+            tt.Resize(224),
+        ]
+    )
 
     # Load datasets from the sat.dataset module
-
     train_ds = sat.datasets.EuroSAT(
         root_dir=args.data_dir,
         phase="train",
+        transforms=train_tt,
     )
     val_ds = sat.datasets.EuroSAT(
         root_dir=args.data_dir,
         phase="val",
+        transforms=val_tt,
     )
 
     # Create a DataLoader for training and validation
@@ -214,7 +246,22 @@ def main(args):
     model_save_name = f"{args.arch}_{args.config}_best"
 
     # Define metrics
-    model.add_metric("accuracy", tm.Accuracy())
+    model.add_metric(
+        "accuracy",
+        tm.Accuracy(),
+    )
+    model.add_metric(
+        "precision",
+        tm.Precision(len(train_ds.classes)),
+    )
+    model.add_metric(
+        "recall",
+        tm.Recall(len(train_ds.classes)),
+    )
+    model.add_metric(
+        "F1",
+        tm.F1(len(train_ds.classes)),
+    )
 
     # Define checkpoint callback
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
@@ -237,10 +284,11 @@ def main(args):
         gpus=args.device,  # GPU device
         max_epochs=args.max_epoch,  # Stop training once this number of epochs is reached
         check_val_every_n_epoch=1,  # Check validation every n train epochs.
+        deterministic=True,  # Set to True to disable randomness in the model
     )
 
     # Fit the model
-    trainer.fit(model, train_dataloader=train_dl, val_dataloaders=[val_dl])
+    trainer.fit(model, train_dataloaders=train_dl, val_dataloaders=[val_dl])
 
 
 if __name__ == "__main__":

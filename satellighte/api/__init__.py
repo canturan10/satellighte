@@ -50,7 +50,7 @@ def get_model_versions(model: str) -> list:
 
     versions = []
     for version in _get_list_of_dirs(model_path):
-        versions.append(version)
+        versions.append(version[1:])
 
     return sorted(versions)
 
@@ -76,9 +76,9 @@ def get_saved_model(model: str, version: str):
         model (str): Model name.
         version (str): Model version.
     """
-    model_dir = os.path.join(_get_model_dir(), model, str(version))
+    model_dir = os.path.join(_get_model_dir(), model, f"v{version}")
 
-    info_dict = _get_model_info(model, version)
+    info_dict = _get_model_info(model, f"v{version}")
     url = info_dict.get("url")
 
     try:

@@ -11,3 +11,7 @@ MODEL:
           url: "https://github.com/canturan10/satellighte/releases/download/v0.0.2/mobilenetv2_default_eurosat.pth"
           onnx: "https://github.com/canturan10/satellighte/releases/download/v0.0.2/mobilenetv2_default_eurosat.onnx"
           quantize-onnx: "https://github.com/canturan10/satellighte/releases/download/v0.0.2/mobilenetv2_default_eurosat_quantize.onnx"
+        v1:
+          url: "https://github.com/canturan10/satellighte/releases/download/v0.0.11/mobilenetv2_default_eurosat.pth"
+          onnx: "https://github.com/canturan10/satellighte/releases/download/v0.0.11/mobilenetv2_default_eurosat.onnx"
+          quantize-onnx: "https://github.com/canturan10/satellighte/releases/download/v0.0.11/mobilenetv2_default_eurosat_quantize.onnx"

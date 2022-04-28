@@ -198,7 +198,7 @@ class Classifier(pl.LightningModule):
         api.get_saved_model(model_name, version)
 
         # Get pretrained model pat
-        model_path = os.path.join(_get_model_dir(), model_name, version)
+        model_path = os.path.join(_get_model_dir(), model_name, f"v{version}")
 
         return arch_cls.from_pretrained(model_path, config=config)
 

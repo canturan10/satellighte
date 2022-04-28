@@ -7,6 +7,22 @@ from sklearn.model_selection import train_test_split
 from torchvision.datasets.utils import extract_archive
 from .base import BaseDataset
 from ..core import _download_file_from_url
+import torch
+
+
+class Identity(torch.nn.Module):
+    def __init__(self):
+        super(Identity, self).__init__()
+
+    def forward(self, X: torch.Tensor) -> torch.Tensor:
+        """Accepts all kind of tensor and returns back
+
+        Arguments:
+                X {torch.Tensor} -- any shape of tensor
+        Returns:
+                torch.Tensor -- same as the input tensor without any copy
+        """
+        return X
 
 
 class EuroSAT(BaseDataset):
@@ -28,6 +44,7 @@ class EuroSAT(BaseDataset):
 
         self.root_dir = root_dir
         self.phase = phase
+        self.transforms = Identity() if transforms is None else transforms
         self.download()
 
         ids, targets = self._split_dataset(phase)

@@ -31,7 +31,7 @@ class MobileNetV2(nn.Module):
                 "round_nearest": 8,
                 "block": None,
                 "norm_layer": None,
-                "dropout": 0.2,
+                "dropout": 0.5,
                 "pretrained": False,
             },
         },
@@ -186,6 +186,14 @@ class MobileNetV2(nn.Module):
             )
         elif hparams_optimizer == "adam":
             optimizer = torch.optim.Adam(
+                self.parameters(),
+                lr=hparams.get("learning_rate", 1e-1),
+                betas=hparams.get("betas", (0.9, 0.999)),
+                eps=hparams.get("eps", 1e-08),
+                weight_decay=hparams.get("weight_decay", 1e-5),
+            )
+        elif hparams_optimizer == "adamw":
+            optimizer = torch.optim.AdamW(
                 self.parameters(),
                 lr=hparams.get("learning_rate", 1e-1),
                 betas=hparams.get("betas", (0.9, 0.999)),

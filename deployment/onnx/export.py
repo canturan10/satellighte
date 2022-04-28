@@ -26,9 +26,7 @@ def parse_arguments():
     arg.add_argument(
         "--version",
         type=str,
-        default=sat.get_model_latest_version(sat.available_models()[0]),
-        choices=sat.get_model_latest_version(sat.available_models()[0]),
-        help="Model architecture",
+        help="Model version",
     )
     arg.add_argument(
         "--target",
@@ -59,10 +57,18 @@ def main(args):
         args : Parsed arguments
     """
     # pylint: disable=no-member
+    if args.version:
+        if args.version not in sat.get_model_versions(args.model_name):
+            raise ValueError(
+                f"model version {args.version} not available for model {args.model_name}, available versions: {sat.get_model_versions(args.model_name)}"
+            )
+        version = args.version
+    else:
+        version = sat.get_model_latest_version(args.model_name)
 
     model = sat.Classifier.from_pretrained(
         args.model_name,
-        version=args.version,
+        version=version,
     )
     model.eval()
 
@@ -72,10 +78,10 @@ def main(args):
         target_path = os.path.join(
             sat.core._get_model_dir(),
             args.model_name,
-            args.version,
+            f"v{version}",
         )
 
-    print(target_path)
+    print(f"Target Path: {target_path}")
     dynamic_axes = {
         "input_data": {0: "batch", 2: "height", 3: "width"},  # write axis names
         "preds": {0: "batch"},
@@ -127,6 +133,7 @@ def main(args):
     meta.key = "labels"
     meta.value = "\n".join(model.labels)
     onnx.save(onnx_model, target_model_path)
+    print("Model saved")
 
 
 if __name__ == "__main__":

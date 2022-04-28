@@ -106,7 +106,14 @@ def visualize(img: np.ndarray, preds: List[Dict]) -> Image:
         Image: 3 channel PIL Image that will be shown on screen
     """
     pil_img = Image.fromarray(img)
-    pil_img = pil_img.resize((512, 512), Image.ANTIALIAS)
+
+    old_size = pil_img.size
+    desired_size = 512
+    ratio = float(desired_size) / max(old_size)
+    new_size = tuple([int(x * ratio) for x in old_size])
+
+    pil_img = pil_img.resize(new_size, Image.ANTIALIAS)
+
     font = ImageFont.load_default()
 
     for pred in preds:

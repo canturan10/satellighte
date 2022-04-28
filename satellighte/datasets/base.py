@@ -40,7 +40,7 @@ class BaseDataset(Dataset):
 
         # apply transforms
         if self.transforms:
-            img, targets = self.transforms(img, targets)
+            img = self.transforms(img)
         targets = torch.tensor(targets, dtype=torch.long)
 
         return (img, targets)

@@ -30,6 +30,11 @@ def parse_arguments():
         help="Model architecture",
     )
     arg.add_argument(
+        "--version",
+        type=str,
+        help="Model version",
+    )
+    arg.add_argument(
         "--source",
         "-s",
         type=str,
@@ -46,13 +51,23 @@ def main(args):
     Args:
         args : Parsed arguments
     """
-    model = sat.Classifier.from_pretrained(args.model_name)
+    if args.version:
+        if args.version not in sat.get_model_versions(args.model_name):
+            raise ValueError(
+                f"model version {args.version} not available for model {args.model_name}, available versions: {sat.get_model_versions(args.model_name)}"
+            )
+        version = args.version
+    else:
+        version = sat.get_model_latest_version(args.model_name)
+
+    model = sat.Classifier.from_pretrained(args.model_name, version=version)
     model.eval()
     model.to(args.device)
-    # print(model.summarize(max_depth=1))
+    print(model.summarize(max_depth=1))
 
     if os.path.isdir(args.source):
         for file in os.listdir(args.source):
+            print(file)
             file_path = os.path.join(args.source, file)
             if os.path.isfile(file_path):
                 img = imageio.imread(file_path)
