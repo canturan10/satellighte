@@ -8,5 +8,5 @@
 > Satellite Image Classification
 
 [Documentation](https://satellighte.readthedocs.io/)
-[Demo](https://github.com/canturan10/satellighte/)
+[Demo](https://share.streamlit.io/canturan10/satellighte-streamlit/app.py)
 [Get Started](#about-the-satellighte)

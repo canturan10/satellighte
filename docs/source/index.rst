@@ -15,7 +15,7 @@ Satellite Image Classification
 :|:flying_saucer:| Version: |release|
 :|:artificial_satellite:| Pages:
    - |:small_airplane:| `Project Page <https://canturan10.github.io/satellighte>`_
-   - |:airplane:| `Github Page <https://canturan10.github.io/satellighte>`_
+   - |:airplane:| `Github Page <https://github.com/canturan10/satellighte>`_
    - |:rocket:| `Demo Page <https://share.streamlit.io/canturan10/satellighte-streamlit/app.py>`_
 
 .. toctree::
