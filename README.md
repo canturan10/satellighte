@@ -120,7 +120,7 @@ results = model.predict(img)
 ## Architectures
 
 - [x] [MobileNetV2](satellighte/archs/README.md#MobileNetV2)
-- [ ] [EfficientDet](satellighte/archs/README.md)
+- [ ] [EfficientNet](satellighte/archs/README.md)
 - [ ] [ResNet](satellighte/archs/README.md)
 - [ ] [CoAtNet](satellighte/archs/README.md)
 
