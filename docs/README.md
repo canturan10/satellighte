@@ -14,6 +14,42 @@
     </strong>
 </p>
 
+<!-- TABLE OF CONTENTS -->
+<details>
+    <summary>
+        <strong>
+            TABLE OF CONTENTS
+        </strong>
+    </summary>
+    <ol>
+        <li>
+            <a href="#about-the-satellighte">About The Satellighte</a>
+        </li>
+        <li>
+            <a href="##prerequisites">Prerequisites</a>
+        </li>
+        <li>
+            <a href="#installation">Installation</a>
+            <ul>
+                <li><a href="#from-pypi">From Pypi</a></li>
+                <li><a href="#from-source">From Source</a></li>
+            </ul>
+        </li>
+        <li><a href="#usage-examples">Usage Examples</a></li>
+        <li><a href="#architectures">Architectures</a></li>
+        <li><a href="#datasets">Datasets</a></li>
+        <li><a href="#deployments">Deployments</a></li>
+        <li><a href="#training">Training</a></li>
+        <li><a href="#tests">Tests</a></li>
+        <li><a href="#contributing">Contributing</a></li>
+        <li><a href="#contributors">Contributors</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#license">License</a></li>
+        <li><a href="#references">References</a></li>
+        <li><a href="#citations">Citations</a></li>
+    </ol>
+</details>
+
 <!-- ABOUT THE PROJECT -->
 ## About The Satellighte
 
@@ -83,30 +119,30 @@ results = model.predict(img)
 <!-- ARCHITECTURES -->
 ## Architectures
 
-- [x] [MobileNetV2](satellighte/archs/README.md#MobileNetV2)
-- [ ] [EfficientDet](satellighte/archs/README.md)
-- [ ] [ResNet](satellighte/archs/README.md)
-- [ ] [CoAtNet](satellighte/archs/README.md)
+- [x] [MobileNetV2](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#mobilenetv2)
+- [x] [EfficientNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#efficientnet)
+- [ ] [ResNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md)
+- [ ] [CoAtNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md)
 
-_For more information, please refer to the [Architectures](satellighte/archs)_
+_For more information, please refer to the [Architectures](https://github.com/canturan10/satellighte/blob/master/satellighte/archs)_
 
 <!-- DATASETS -->
 ## Datasets
 
-- [x] [EuroSAT](satellighte/datasets/README.md#EuroSAT)
-- [ ] [RESISC45](satellighte/datasets/README.md)
+- [x] [EuroSAT](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets/README.md#EuroSAT)
+- [ ] [RESISC45](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets/README.md)
 
-_For more information, please refer to the [Datasets](satellighte/datasets)_
+_For more information, please refer to the [Datasets](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets)_
 
 <!-- DEPLOYMENTS -->
 ## Deployments
 
-- [x] [FastAPI](deployment/README.md#fastapi)
-- [x] [ONNX](deployment/README.md#onnx)
-- [ ] [BentoML](deployment/README.md)
-- [ ] [DeepSparse](deployment/README.md)
+- [x] [FastAPI](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#fastapi)
+- [x] [ONNX](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#onnx)
+- [ ] [BentoML](https://github.com/canturan10/satellighte/blob/master/deployment/README.md)
+- [ ] [DeepSparse](https://github.com/canturan10/satellighte/blob/master/deployment/README.md)
 
-_For more information, please refer to the [Deployment](deployment)_
+_For more information, please refer to the [Deployment](https://github.com/canturan10/satellighte/blob/master/deployment)_
 
 <!-- TRAINING -->
 ## Training
@@ -266,6 +302,23 @@ The references used in the development of the project are as follows.
   eprint    = {1801.04381},
   timestamp = {Tue, 12 Jan 2021 15:30:06 +0100},
   biburl    = {https://dblp.org/rec/journals/corr/abs-1801-04381.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
+```BibTeX
+@article{DBLP:journals/corr/abs-1905-11946,
+  author    = {Mingxing Tan and
+               Quoc V. Le},
+  title     = {EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks},
+  journal   = {CoRR},
+  volume    = {abs/1905.11946},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1905.11946},
+  eprinttype = {arXiv},
+  eprint    = {1905.11946},
+  timestamp = {Mon, 03 Jun 2019 13:42:33 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1905-11946.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 ```
