@@ -1,3 +1,7 @@
+<p align="right">
+    <a href="https://www.buymeacoffee.com/canturan10"><img src="https://img.buymeacoffee.com/button-api/?text=You can buy me a coffee&emoji=&slug=canturan10&button_colour=5F7FFF&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" width="200" /></a>
+</p>
+
 <!-- PROJECT SUMMARY -->
 <p align="center">
     <img width="100px" src="https://raw.githubusercontent.com/canturan10/satellighte/master/src/satellighte.png" align="center" alt="Satellighte" />
