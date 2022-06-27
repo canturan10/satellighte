@@ -161,10 +161,12 @@ def main(args):
     # Set seed for reproducibility
     pl.seed_everything(args.seed, workers=True)
 
+    input_size = 240
+
     # Build transforms for training and validation
     train_tt = tt.Compose(
         [
-            tt.Resize(224),
+            tt.Resize(input_size),
             tt.ColorJitter(
                 brightness=0.25,
                 contrast=0.25,
@@ -192,7 +194,7 @@ def main(args):
     )
     val_tt = tt.Compose(
         [
-            tt.Resize(224),
+            tt.Resize(input_size),
         ]
     )
 

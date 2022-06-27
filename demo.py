@@ -1,6 +1,6 @@
 import argparse
 
-import imageio
+import imageio.v2 as imageio
 import torch
 import os
 import satellighte as sat
