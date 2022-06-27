@@ -3,7 +3,6 @@ from typing import Dict, List
 
 import torch
 import torch.nn as nn
-import torchvision
 
 from .blocks.efficientnet import Efficient_Net
 
@@ -43,7 +42,7 @@ class EfficientNet(nn.Module):
             },
             "model": {
                 "inverted_residual_setting": "v1",
-                "dropout": 0.2,
+                "dropout": 0.25,
                 "width_mult": 1.0,
                 "depth_mult": 1.1,
                 "pretrained": False,

@@ -1,19 +1,12 @@
-from ast import Str
-from typing import Any, Callable, List, Optional, Union, Sequence
 import copy
 import math
+from ast import Str
+from typing import Any, Callable, List, Optional
 
 import torch
 from torch import nn
-from functools import partial
 
-from .layers import (
-    MBConvConfig,
-    FusedMBConvConfig,
-    _MBConvConfig,
-    ConvNormActivation,
-    _make_divisible,
-)
+from .layers import ConvNormActivation, MBConvConfig
 
 
 class Efficient_Net(nn.Module):

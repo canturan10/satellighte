@@ -1,9 +1,10 @@
 import math
+from dataclasses import dataclass
 from functools import partial
-from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Callable, List, Optional
+
 import torch
 from torch import nn
-from dataclasses import dataclass
 
 
 class StochasticDepth(nn.Module):
@@ -42,6 +43,7 @@ def stochastic_depth(input, p: float, mode: str, training: bool = True):
     Returns:
         Tensor[N, ...]: The randomly zeroed tensor.
     """
+    # pylint: disable=no-member
     if p < 0.0 or p > 1.0:
         raise ValueError(f"drop probability has to be between 0 and 1, but got {p}")
     if mode not in ["batch", "row"]:
