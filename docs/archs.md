@@ -1,4 +1,8 @@
-# Architectures
+# Architectures  <!-- omit in toc -->
+
+- [MobileNetV2](#mobilenetv2)
+- [EfficientNet](#efficientnet)
+- [Citation](#citation)
 
 ## MobileNetV2
 
@@ -7,6 +11,14 @@
 |  Architecture   | Configuration | Parameters | Model Size |
 | :-------------: | :-----------: | :--------: | :--------: |
 | **MobileNetV2** |    default    |   2.2 M    |  8.947 MB  |
+
+## EfficientNet
+
+**EfficientNet** is a convolutional neural network architecture and scaling method that uniformly scales all dimensions of depth/width/resolution using a compound coefficient. Unlike conventional practice that arbitrary scales these factors, the EfficientNet scaling method uniformly scales network width, depth, and resolution with a set of fixed scaling coefficients. The base EfficientNet-B0 network is based on the inverted bottleneck residual blocks of [MobileNetV2](https://paperswithcode.com/method/mobilenetv2), in addition to squeeze-and-excitation blocks.
+
+|  Architecture   | Configuration | Parameters | Model Size |
+| :-------------: | :-----------: | :--------: | :--------: |
+| **EfficientNet** |    B0    |   4.0 M    |  16.081 MB  |
 
 ## Citation
 
@@ -27,6 +39,23 @@
   eprint    = {1801.04381},
   timestamp = {Tue, 12 Jan 2021 15:30:06 +0100},
   biburl    = {https://dblp.org/rec/journals/corr/abs-1801-04381.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
+```BibTeX
+@article{DBLP:journals/corr/abs-1905-11946,
+  author    = {Mingxing Tan and
+               Quoc V. Le},
+  title     = {EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks},
+  journal   = {CoRR},
+  volume    = {abs/1905.11946},
+  year      = {2019},
+  url       = {http://arxiv.org/abs/1905.11946},
+  eprinttype = {arXiv},
+  eprint    = {1905.11946},
+  timestamp = {Mon, 03 Jun 2019 13:42:33 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1905-11946.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 ```
