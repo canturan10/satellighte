@@ -134,7 +134,7 @@ _For more information, please refer to the [Architectures](https://github.com/ca
 ## Datasets
 
 - [x] [EuroSAT](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets/README.md#EuroSAT)
-- [ ] [RESISC45](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets/README.md)
+- [x] [RESISC45](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets/README.md)
 
 _For more information, please refer to the [Datasets](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets)_
 
