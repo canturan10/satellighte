@@ -1,10 +1,12 @@
 import argparse
+
 import pytorch_lightning as pl
 import satellighte as sat
 import torch
 import torchmetrics as tm
 import torchvision.transforms as tt
 from torch.utils.data import DataLoader
+from uniplot import plot
 
 
 def parse_arguments():
@@ -76,6 +78,11 @@ def parse_arguments():
         default=13,
         help="Seed for reproducibility",
     )
+    arg.add_argument(
+        "--overfit",
+        action="store_true",
+        help="Overfit the model",
+    )
 
     # Hyperparameters
     arg.add_argument(
@@ -97,6 +104,11 @@ def parse_arguments():
         type=float,
         default=1e-2,
         help="Learning rate for training",
+    )
+    arg.add_argument(
+        "--find_learning_rate",
+        action="store_true",
+        help="Find Learning rate for training",
     )
     arg.add_argument(
         "--momentum",
@@ -161,9 +173,10 @@ def main(args):
     # Set seed for reproducibility
     pl.seed_everything(args.seed, workers=True)
 
-    input_size = 240
+    model = sat.Classifier.build(args.arch, config=args.config)
+    input_size = model.input_size
 
-    # Build transforms for training and validation
+    # Build transforms for training, testing and validation
     train_tt = tt.Compose(
         [
             tt.Resize(input_size),
@@ -192,6 +205,11 @@ def main(args):
             ),
         ]
     )
+    test_tt = tt.Compose(
+        [
+            tt.Resize(input_size),
+        ]
+    )
     val_tt = tt.Compose(
         [
             tt.Resize(input_size),
@@ -199,12 +217,17 @@ def main(args):
     )
 
     # Load datasets from the sat.dataset module
-    train_ds = sat.datasets.EuroSAT(
+    train_ds = sat.datasets.RESISC45(
         root_dir=args.data_dir,
         phase="train",
         transforms=train_tt,
     )
-    val_ds = sat.datasets.EuroSAT(
+    test_ds = sat.datasets.RESISC45(
+        root_dir=args.data_dir,
+        phase="test",
+        transforms=val_tt,
+    )
+    val_ds = sat.datasets.RESISC45(
         root_dir=args.data_dir,
         phase="val",
         transforms=val_tt,
@@ -215,6 +238,13 @@ def main(args):
         train_ds,
         batch_size=args.batch_size,
         shuffle=True,
+        num_workers=args.num_workers,
+    )
+
+    test_dl = DataLoader(
+        test_ds,
+        batch_size=args.eval_batch_size,
+        shuffle=False,
         num_workers=args.num_workers,
     )
 
@@ -244,6 +274,33 @@ def main(args):
         labels=train_ds.classes,
     )
 
+    # If find_learning_rate is True, find the learning rate for the model
+    if args.find_learning_rate:
+        trainer = pl.Trainer(gpus=args.device, auto_lr_find=True, max_epochs=100)
+
+        lr_finder = trainer.tuner.lr_find(
+            model, train_dataloaders=train_dl, val_dataloaders=[val_dl]
+        )
+        plot(
+            xs=lr_finder.results["lr"],
+            ys=lr_finder.results["loss"],
+            title="Learning Rate Finder Result",
+            legend_labels=["Learning Rate", "Loss"],
+            color=True,
+            height=30,
+            width=60,
+        )
+        print(f"Suggested Learning Rate: {lr_finder.suggestion()}")
+        del model
+        del trainer
+        hparams["learning_rate"] = lr_finder.suggestion()
+        model = sat.Classifier.build(
+            args.arch,
+            config=args.config,
+            hparams=hparams,
+            labels=train_ds.classes,
+        )
+
     # Saved model name
     model_save_name = f"{args.arch}_{args.config}_best"
 
@@ -251,18 +308,6 @@ def main(args):
     model.add_metric(
         "accuracy",
         tm.Accuracy(),
-    )
-    model.add_metric(
-        "precision",
-        tm.Precision(len(train_ds.classes)),
-    )
-    model.add_metric(
-        "recall",
-        tm.Recall(len(train_ds.classes)),
-    )
-    model.add_metric(
-        "F1",
-        tm.F1(len(train_ds.classes)),
     )
 
     # Define checkpoint callback
@@ -278,7 +323,7 @@ def main(args):
     # Define trainer
     trainer = pl.Trainer(
         default_root_dir=".",  # Default path for logs and weights
-        accumulate_grad_batches=4,  # Accumulates grads every k batches
+        accumulate_grad_batches=5,  # Accumulates grads every k batches
         callbacks=[
             checkpoint_callback,
             pl.callbacks.RichProgressBar(),
@@ -287,10 +332,16 @@ def main(args):
         max_epochs=args.max_epoch,  # Stop training once this number of epochs is reached
         check_val_every_n_epoch=1,  # Check validation every n train epochs.
         deterministic=True,  # Set to True to disable randomness in the model
+        overfit_batches=(
+            0.01 if args.overfit else 0.0
+        ),  # Overfit on a small number of batches
     )
 
     # Fit the model
-    trainer.fit(model, train_dataloaders=train_dl, val_dataloaders=[val_dl])
+    trainer.fit(model, train_dataloaders=train_dl, val_dataloaders=val_dl)
+
+    # Evaluate the model
+    trainer.test(dataloaders=test_dl)
 
 
 if __name__ == "__main__":

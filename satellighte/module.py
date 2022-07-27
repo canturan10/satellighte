@@ -314,11 +314,19 @@ class Classifier(pl.LightningModule):
 
         for metric in self.__metrics.values():
             metric.update(preds.cpu(), targets.cpu())
+        return loss
 
     def test_epoch_end(self, outputs):
         metric_results = {}
         for name, metric in self.__metrics.items():
             metric_results[name] = metric.compute()
+
+        for name, metric in self.__metrics.items():
+            self.log(
+                "metrics/{}".format(name),
+                metric.compute(),
+                prog_bar=True,
+            )
         return metric_results
 
     def configure_optimizers(self):

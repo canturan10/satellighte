@@ -5,24 +5,9 @@ import numpy as np
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from torchvision.datasets.utils import extract_archive
-from .base import BaseDataset
+
 from ..core import _download_file_from_url
-import torch
-
-
-class Identity(torch.nn.Module):
-    def __init__(self):
-        super(Identity, self).__init__()
-
-    def forward(self, X: torch.Tensor) -> torch.Tensor:
-        """Accepts all kind of tensor and returns back
-
-        Arguments:
-                X {torch.Tensor} -- any shape of tensor
-        Returns:
-                torch.Tensor -- same as the input tensor without any copy
-        """
-        return X
+from .base import BaseDataset, Identity
 
 
 class EuroSAT(BaseDataset):
@@ -30,7 +15,11 @@ class EuroSAT(BaseDataset):
     Eurosat is a dataset and deep learning benchmark for land use and land cover classification. The dataset is based on Sentinel-2 satellite images covering 13 spectral bands and consisting out of 10 classes with in total 27,000 labeled and geo-referenced images.
     """
 
-    __phases__ = ("val", "train")
+    __phases__ = (
+        "train",
+        "test",
+        "val",
+    )
 
     def __init__(
         self,
@@ -102,10 +91,23 @@ class EuroSAT(BaseDataset):
             random_state=1,
             stratify=labels,
         )
+
+        x_train, x_val, y_train, y_val = train_test_split(
+            x_train,
+            y_train,
+            test_size=0.25,
+            random_state=1,
+            stratify=y_train,
+        )  # 0.25 x 0.8 = 0.2
+
         if phase == "train":
             return x_train.tolist(), y_train.tolist()
-        else:
+        elif phase == "test":
             return x_test.tolist(), y_test.tolist()
+        elif phase == "val":
+            return x_val.tolist(), y_val.tolist()
+        else:
+            raise ValueError("Unknown phase")
 
     def _check_exists(self) -> bool:
         """
@@ -136,3 +138,5 @@ class EuroSAT(BaseDataset):
 if __name__ == "__main__":
     data = EuroSAT("satellighte/datas/eurosat")
     print(data[0])
+    print(data.classes)
+    print(len(data.classes))

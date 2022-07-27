@@ -2,28 +2,12 @@ import os
 from typing import List, Tuple
 
 import numpy as np
-import torch
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from torchvision.datasets.utils import extract_archive
 
 from ..core import _download_file_from_url
-from .base import BaseDataset
-
-
-class Identity(torch.nn.Module):
-    def __init__(self):
-        super(Identity, self).__init__()
-
-    def forward(self, X: torch.Tensor) -> torch.Tensor:
-        """Accepts all kind of tensor and returns back
-
-        Arguments:
-                X {torch.Tensor} -- any shape of tensor
-        Returns:
-                torch.Tensor -- same as the input tensor without any copy
-        """
-        return X
+from .base import BaseDataset, Identity
 
 
 class RESISC45(BaseDataset):
@@ -31,7 +15,11 @@ class RESISC45(BaseDataset):
     RESISC45 dataset is a dataset for Remote Sensing Image Scene Classification (RESISC). It contains 31,500 RGB images of size 256×256 divided into 45 scene classes, each class containing 700 images.
     """
 
-    __phases__ = ("val", "train")
+    __phases__ = (
+        "train",
+        "test",
+        "val",
+    )
 
     def __init__(
         self,
@@ -103,10 +91,23 @@ class RESISC45(BaseDataset):
             random_state=1,
             stratify=labels,
         )
+
+        x_train, x_val, y_train, y_val = train_test_split(
+            x_train,
+            y_train,
+            test_size=0.25,
+            random_state=1,
+            stratify=y_train,
+        )  # 0.25 x 0.8 = 0.2
+
         if phase == "train":
             return x_train.tolist(), y_train.tolist()
-        else:
+        elif phase == "test":
             return x_test.tolist(), y_test.tolist()
+        elif phase == "val":
+            return x_val.tolist(), y_val.tolist()
+        else:
+            raise ValueError("Unknown phase")
 
     def _check_exists(self) -> bool:
         """
