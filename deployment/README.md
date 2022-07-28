@@ -3,12 +3,15 @@
 - [FastAPI](#fastapi)
 	- [Install Dependency For FastAPI](#install-dependency-for-fastapi)
 	- [Run AI Service](#run-ai-service)
-- [Build AI Service As Docker Image](#build-ai-service-as-docker-image)
-- [Run AI Service As Docker Container](#run-ai-service-as-docker-container)
+	- [Build AI Service As Docker Image](#build-ai-service-as-docker-image)
+	- [Run AI Service As Docker Container](#run-ai-service-as-docker-container)
 - [ONNX](#onnx)
 	- [Install Dependency For ONNX](#install-dependency-for-onnx)
 	- [Convert Model to ONNX](#convert-model-to-onnx)
 	- [ONNX Runtime](#onnx-runtime)
+- [DeepSparse](#deepsparse)
+	- [Install Dependency For DeepSparse](#install-dependency-for-deepsparse)
+	- [DeepSparse Runtime](#deepsparse-runtime)
 
 ## FastAPI
 
@@ -30,7 +33,7 @@ pip install python-multipart
 python deployment/fastapi/service.py
 ```
 
-## Build AI Service As Docker Image
+### Build AI Service As Docker Image
 
 From root directory of the repository run followings,
 
@@ -38,7 +41,7 @@ From root directory of the repository run followings,
 docker build -t satellighte-fastapi deployment/fastapi/
 ```
 
-## Run AI Service As Docker Container
+### Run AI Service As Docker Container
 
 if gpu enabled, run with
 
@@ -75,4 +78,23 @@ python deployment/onnx/export.py
 
 ```bash
 python deployment/onnx/runtime.py
+```
+
+## DeepSparse
+
+Neural Magic's [DeepSparse](https://docs.neuralmagic.com/deepsparse/) Engine is able to integrate into popular deep learning libraries allowing you to leverage DeepSparse for loading and deploying sparse models with ONNX.
+
+From root directory of the repository run followings,
+We need the `ONNX` file to use it. [Create your onnx file from the above steps](#onnx). Next,
+
+### Install Dependency For DeepSparse
+
+```bash
+pip install deepsparse~=1.0.2
+```
+
+### DeepSparse Runtime
+
+```bash
+python deployment/deepsparse/runtime.py
 ```
