@@ -1,3 +1,6 @@
+<p align="center">
+    <img src="/src/deployment.png" align="center" alt="Satellighte" />
+
 # Deployments <!-- omit in toc -->
 
 - [FastAPI](#fastapi)

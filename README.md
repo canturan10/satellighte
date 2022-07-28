@@ -270,6 +270,25 @@ The references used in the development of the project are as follows.
 ## Citations
 
 ```bibtex
+@article{DBLP:journals/corr/ChengHL17,
+  author    = {Gong Cheng and
+               Junwei Han and
+               Xiaoqiang Lu},
+  title     = {Remote Sensing Image Scene Classification: Benchmark and State of
+               the Art},
+  journal   = {CoRR},
+  volume    = {abs/1703.00121},
+  year      = {2017},
+  url       = {http://arxiv.org/abs/1703.00121},
+  eprinttype = {arXiv},
+  eprint    = {1703.00121},
+  timestamp = {Mon, 02 Dec 2019 09:32:19 +0100},
+  biburl    = {https://dblp.org/rec/journals/corr/ChengHL17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
+```bibtex
 @article{helber2019eurosat,
   title={Eurosat: A novel dataset and deep learning benchmark for land use and land cover classification},
   author={Helber, Patrick and Bischke, Benjamin and Dengel, Andreas and Borth, Damian},
