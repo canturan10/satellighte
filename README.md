@@ -145,8 +145,7 @@ _For more information, please refer to the [Datasets](https://github.com/cantura
 - [x] [ONNX](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#onnx)
 - [x] [DeepSparse](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#deepsparse)
 - [x] [TensorFlow](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#tensorflow)
-- [ ] [TensorFlow Lite](https://github.com/canturan10/satellighte/blob/master/deployment/README.md)
-- [ ] [BentoML](https://github.com/canturan10/satellighte/blob/master/deployment/README.md)
+- [x] [TensorFlow Lite](https://github.com/canturan10/satellighte/blob/master/deployment/README.md)
 
 _For more information, please refer to the [Deployment](https://github.com/canturan10/satellighte/blob/master/deployment)_
 

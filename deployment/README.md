@@ -16,6 +16,10 @@
 	- [Install Dependency For TensorFlow](#install-dependency-for-tensorflow)
 	- [Convert ONNX Model to TensorFlow](#convert-onnx-model-to-tensorflow)
 	- [TensorFlow Runtime](#tensorflow-runtime)
+- [TensorFlow Lite](#tensorflow-lite)
+	- [Install Dependency For TensorFlow Lite](#install-dependency-for-tensorflow-lite)
+	- [Convert TensorFlow Model to TensorFlow Lite](#convert-tensorflow-model-to-tensorflow-lite)
+	- [TensorFlow Lite Runtime](#tensorflow-lite-runtime)
 
 ## FastAPI
 
@@ -88,7 +92,7 @@ python deployment/onnx/runtime.py
 
 Neural Magic's [DeepSparse](https://docs.neuralmagic.com/deepsparse/) Engine is able to integrate into popular deep learning libraries allowing you to leverage DeepSparse for loading and deploying sparse models with ONNX.
 
-From root directory of the repository run followings. We need the `ONNX` file to use it. [Create your onnx file from the above steps](#onnx). Next,
+From root directory of the repository run followings. We need the `ONNX` model to use it. [Create your onnx model from the above steps](#onnx). Next,
 
 ### Install Dependency For DeepSparse
 
@@ -116,16 +120,48 @@ pip install tensorflow~=2.9.1
 pip install tensorflow-probability~=0.17.0
 ```
 
-From root directory of the repository run followings. We need the `ONNX` file to use it. [Create your onnx file from the above steps](#onnx). Next,
+From root directory of the repository run followings. We need the `ONNX` model to use it. [Create your onnx model from the above steps](#onnx). Next,
 
 ### Convert ONNX Model to TensorFlow
 
 ```bash
 python deployment/tensorflow/export.py
+# python deployment/tensorflow/export.py -m satellighte/models/mobilenetv2_default_eurosat/v0/mobilenetv2_default_eurosat.onnx
 ```
 
 ### TensorFlow Runtime
 
 ```bash
 python deployment/tensorflow/runtime.py
+# python deployment/tensorflow/runtime.py -m satellighte/models/mobilenetv2_default_eurosat/v0/mobilenetv2_default_eurosat_tensorflow  -s src/eurosat_samples/AnnualCrop.jpg -l "AnnualCrop,PermanentCrop,Forest,HerbaceousVegetation,Highway,Industrial,Pasture,Residential,River,SeaLake"
+```
+
+## TensorFlow Lite
+
+[TensorFlow Lite](https://www.tensorflow.org/lite) is a mobile library for deploying models on mobile, microcontrollers and other edge devices.
+
+From root directory of the repository run followings,
+
+### Install Dependency For TensorFlow Lite
+
+```bash
+pip install onnx-tf~=1.10.0
+pip install tensorflow~=2.9.1
+pip install tensorflow-probability~=0.17.0
+```
+
+From root directory of the repository run followings. We need the `TensorFlow` model to use it. [Create your tensorflow model from the above steps](#tensorflow). Next,
+
+### Convert TensorFlow Model to TensorFlow Lite
+
+```bash
+python deployment/tensorflow_lite/export.py
+# python deployment/tensorflow_lite/export.py -m satellighte/models/mobilenetv2_default_eurosat/v0/mobilenetv2_default_eurosat_tensorflow
+```
+
+### TensorFlow Lite Runtime
+
+```bash
+python deployment/tensorflow_lite/runtime.py
+# python deployment/tensorflow_lite/runtime.py -m satellighte/models/mobilenetv2_default_eurosat/v0/mobilenetv2_default_eurosat_tensorflow.tflite -s satellighte/src/eurosat_samples/AnnualCrop.jpg -l "AnnualCrop,PermanentCrop,Forest,HerbaceousVegetation,Highway,Industrial,Pasture,Residential,River,SeaLake"
 ```

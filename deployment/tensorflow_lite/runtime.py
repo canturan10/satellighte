@@ -5,7 +5,6 @@ import imageio as imageio
 import numpy as np
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-
 import tensorflow as tf
 
 
@@ -53,20 +52,30 @@ def main(args):
     img = imageio.imread(args.source)[:, :, :3]
     batch = np.expand_dims(np.transpose(img, (2, 0, 1)), 0).astype(np.float32)
 
-    model = tf.saved_model.load(args.model_path)
-    model.trainable = False
+    # Load the TFLite model and allocate tensors
+    interpreter = tf.lite.Interpreter(model_path=args.model_path)
+    interpreter.allocate_tensors()
 
-    input_tensor = tf.convert_to_tensor(batch)
-    preds = model(**{"input_data": input_tensor})
+    # Get input and output tensors
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+
+    interpreter.set_tensor(input_details[0]["index"], batch)
+
+    interpreter.invoke()
+
+    # get_tensor() returns a copy of the tensor data
+    # use tensor() in order to get a pointer to the tensor
+    preds = interpreter.get_tensor(output_details[0]["index"])
 
     labels = np.asarray([str(item) for item in args.labels.split(",")])
 
     outputs = []
-    for x in range(len(preds)):
+    for scores in preds.tolist():
         output = {
             label: round(score, 2)
             for score, label in zip(
-                preds["preds"][x].numpy(),
+                scores,
                 labels,
             )
         }
