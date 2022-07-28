@@ -1,5 +1,6 @@
 import os
 from typing import Dict, List
+from functools import partial
 
 import torch
 import torch.nn as nn
@@ -31,6 +32,10 @@ class EfficientNet(nn.Module):
                 "width_mult": 1.0,
                 "depth_mult": 1.0,
                 "pretrained": False,
+                "norm_layer": {
+                    "eps": 1e-5,
+                    "momentum": 0.1,
+                },
             },
         },
         "b1": {
@@ -46,11 +51,15 @@ class EfficientNet(nn.Module):
                 "width_mult": 1.0,
                 "depth_mult": 1.1,
                 "pretrained": False,
+                "norm_layer": {
+                    "eps": 1e-5,
+                    "momentum": 0.1,
+                },
             },
         },
         "b2": {
             "input": {
-                "input_size": 260,
+                "input_size": 288,
                 "normalized_input": True,
                 "mean": [0.485, 0.456, 0.406],
                 "std": [0.229, 0.224, 0.225],
@@ -61,6 +70,162 @@ class EfficientNet(nn.Module):
                 "width_mult": 1.1,
                 "depth_mult": 1.2,
                 "pretrained": False,
+                "norm_layer": {
+                    "eps": 1e-5,
+                    "momentum": 0.1,
+                },
+            },
+        },
+        "b3": {
+            "input": {
+                "input_size": 300,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "inverted_residual_setting": "v1",
+                "dropout": 0.3,
+                "width_mult": 1.2,
+                "depth_mult": 1.4,
+                "pretrained": False,
+                "norm_layer": {
+                    "eps": 1e-5,
+                    "momentum": 0.1,
+                },
+            },
+        },
+        "b4": {
+            "input": {
+                "input_size": 380,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "inverted_residual_setting": "v1",
+                "dropout": 0.4,
+                "width_mult": 1.4,
+                "depth_mult": 1.8,
+                "pretrained": False,
+                "norm_layer": {
+                    "eps": 1e-5,
+                    "momentum": 0.1,
+                },
+            },
+        },
+        "b5": {
+            "input": {
+                "input_size": 456,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "inverted_residual_setting": "v1",
+                "dropout": 0.4,
+                "width_mult": 1.6,
+                "depth_mult": 2.2,
+                "pretrained": False,
+                "norm_layer": {
+                    "eps": 0.001,
+                    "momentum": 0.01,
+                },
+            },
+        },
+        "b6": {
+            "input": {
+                "input_size": 528,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "inverted_residual_setting": "v1",
+                "dropout": 0.5,
+                "width_mult": 1.8,
+                "depth_mult": 2.6,
+                "pretrained": False,
+                "norm_layer": {
+                    "eps": 0.001,
+                    "momentum": 0.01,
+                },
+            },
+        },
+        "b7": {
+            "input": {
+                "input_size": 600,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "inverted_residual_setting": "v1",
+                "dropout": 0.5,
+                "width_mult": 2.0,
+                "depth_mult": 3.1,
+                "pretrained": False,
+                "norm_layer": {
+                    "eps": 0.001,
+                    "momentum": 0.01,
+                },
+            },
+        },
+        "v2-s": {
+            "input": {
+                "input_size": 384,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "inverted_residual_setting": "v2_s",
+                "dropout": 0.2,
+                "width_mult": 1.0,
+                "depth_mult": 1.0,
+                "pretrained": False,
+                "norm_layer": {
+                    "eps": 1e-3,
+                    "momentum": 0.1,
+                },
+            },
+        },
+        "v2-m": {
+            "input": {
+                "input_size": 480,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "inverted_residual_setting": "v2_m",
+                "dropout": 0.3,
+                "width_mult": 1.0,
+                "depth_mult": 1.0,
+                "pretrained": False,
+                "norm_layer": {
+                    "eps": 1e-3,
+                    "momentum": 0.1,
+                },
+            },
+        },
+        "v2-l": {
+            "input": {
+                "input_size": 480,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "inverted_residual_setting": "v2_l",
+                "dropout": 0.4,
+                "width_mult": 1.0,
+                "depth_mult": 1.0,
+                "pretrained": False,
+                "norm_layer": {
+                    "eps": 1e-3,
+                    "momentum": 0.1,
+                },
             },
         },
     }
@@ -74,6 +239,12 @@ class EfficientNet(nn.Module):
         self.config = config
         self.labels = labels
         self.num_classes = len(self.labels)
+
+        self.norm_layer = partial(
+            nn.BatchNorm2d,
+            eps=self.config["model"]["norm_layer"]["eps"],
+            momentum=self.config["model"]["norm_layer"]["momentum"],
+        )
 
         self.backbone = Efficient_Net(
             inverted_residual_setting=self.config["model"]["inverted_residual_setting"],

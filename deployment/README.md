@@ -12,6 +12,10 @@
 - [DeepSparse](#deepsparse)
 	- [Install Dependency For DeepSparse](#install-dependency-for-deepsparse)
 	- [DeepSparse Runtime](#deepsparse-runtime)
+- [TensorFlow](#tensorflow)
+	- [Install Dependency For TensorFlow](#install-dependency-for-tensorflow)
+	- [Convert ONNX Model to TensorFlow](#convert-onnx-model-to-tensorflow)
+	- [TensorFlow Runtime](#tensorflow-runtime)
 
 ## FastAPI
 
@@ -84,8 +88,7 @@ python deployment/onnx/runtime.py
 
 Neural Magic's [DeepSparse](https://docs.neuralmagic.com/deepsparse/) Engine is able to integrate into popular deep learning libraries allowing you to leverage DeepSparse for loading and deploying sparse models with ONNX.
 
-From root directory of the repository run followings,
-We need the `ONNX` file to use it. [Create your onnx file from the above steps](#onnx). Next,
+From root directory of the repository run followings. We need the `ONNX` file to use it. [Create your onnx file from the above steps](#onnx). Next,
 
 ### Install Dependency For DeepSparse
 
@@ -97,4 +100,32 @@ pip install deepsparse~=1.0.2
 
 ```bash
 python deployment/deepsparse/runtime.py
+```
+
+## TensorFlow
+
+[TensorFlow](https://www.tensorflow.org/) is a free and open-source software library for machine learning and artificial intelligence.
+
+From root directory of the repository run followings,
+
+### Install Dependency For TensorFlow
+
+```bash
+pip install onnx-tf~=1.10.0
+pip install tensorflow~=2.9.1
+pip install tensorflow-probability~=0.17.0
+```
+
+From root directory of the repository run followings. We need the `ONNX` file to use it. [Create your onnx file from the above steps](#onnx). Next,
+
+### Convert ONNX Model to TensorFlow
+
+```bash
+python deployment/tensorflow/export.py
+```
+
+### TensorFlow Runtime
+
+```bash
+python deployment/tensorflow/runtime.py
 ```
