@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/src/deployment.png" align="center" alt="Satellighte" />
+    <img src="https://raw.githubusercontent.com/canturan10/satellighte/master/src/deployment.png" align="center" alt="Deployment" />
 
 # Deployments <!-- omit in toc -->
 
