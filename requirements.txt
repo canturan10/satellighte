@@ -9,3 +9,4 @@ torchaudio~=0.8.1
 torchmetrics~=0.7.1
 torchvision~=0.9.1
 torch~=1.8.1
+uniplot~=0.5.0

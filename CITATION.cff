@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below."
+preferred-citation:
+  type: generic
+  authors:
+    - family-names: "Turan"
+      given-names: "Oguzcan"
+title: "satellighte"
+url: "https://github.com/canturan10/satellighte"
+year: 2022

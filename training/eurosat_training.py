@@ -225,7 +225,7 @@ def main(args):
     test_ds = sat.datasets.RESISC45(
         root_dir=args.data_dir,
         phase="test",
-        transforms=val_tt,
+        transforms=test_tt,
     )
     val_ds = sat.datasets.RESISC45(
         root_dir=args.data_dir,
