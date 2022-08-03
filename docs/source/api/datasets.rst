@@ -7,7 +7,7 @@ satellighte.datasets
    :undoc-members:
    :inherited-members:
 
-.. autoclass:: satellighte.datasets.BaseDataset
+.. autoclass:: satellighte.datasets.RESISC45
    :members:
    :private-members:
    :undoc-members:

@@ -47,3 +47,8 @@ Satellite Image Classification
    deployment/fastapi.rst
    deployment/onnx_export.rst
    deployment/onnx_runtime.rst
+   deployment/deepsparse.rst
+   deployment/tensorflow_export.rst
+   deployment/tensorflow_runtime.rst
+   deployment/tensorflow_lite_export.rst
+   deployment/tensorflow_lite_runtime.rst
