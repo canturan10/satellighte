@@ -51,7 +51,7 @@ def parse_arguments():
     arg.add_argument(
         "--data_dir",
         type=str,
-        default="satellighte/datas/eurosat",
+        default="satellighte/datas/resisc45",
         help="Path to the dataset",
     )
     arg.add_argument(
@@ -181,28 +181,28 @@ def main(args):
         [
             tt.Resize(input_size),
             tt.ColorJitter(
-                brightness=0.25,
-                contrast=0.25,
-                saturation=0.2,
-                hue=0.1,
+                brightness=0.2,
+                contrast=0.2,
+                saturation=0.15,
+                hue=0.05,
             ),
             tt.RandomHorizontalFlip(
-                p=0.5,
+                p=0.4,
             ),
             tt.RandomRotation(
-                degrees=2,
+                degrees=15,
             ),
             tt.GaussianBlur(
                 kernel_size=(5, 9),
                 sigma=(0.1, 5),
             ),
-            tt.RandomPerspective(
-                distortion_scale=0.1,
-                p=0.2,
-            ),
-            tt.RandomPosterize(
-                bits=2,
-            ),
+            # tt.RandomPerspective(
+            # distortion_scale=0.1,
+            # p=0.2,
+            # ),
+            # tt.RandomPosterize(
+            # bits=2,
+            # ),
         ]
     )
     test_tt = tt.Compose(

@@ -134,7 +134,7 @@ _For more information, please refer to the [Architectures](https://github.com/ca
 ## Datasets
 
 - [x] [EuroSAT](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets/README.md#EuroSAT)
-- [ ] [RESISC45](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets/README.md)
+- [x] [RESISC45](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets/README.md)
 
 _For more information, please refer to the [Datasets](https://github.com/canturan10/satellighte/blob/master/satellighte/datasets)_
 
@@ -143,8 +143,9 @@ _For more information, please refer to the [Datasets](https://github.com/cantura
 
 - [x] [FastAPI](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#fastapi)
 - [x] [ONNX](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#onnx)
-- [ ] [BentoML](https://github.com/canturan10/satellighte/blob/master/deployment/README.md)
-- [ ] [DeepSparse](https://github.com/canturan10/satellighte/blob/master/deployment/README.md)
+- [x] [DeepSparse](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#deepsparse)
+- [x] [TensorFlow](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#tensorflow)
+- [x] [TensorFlow Lite](https://github.com/canturan10/satellighte/blob/master/deployment/README.md#tensorflow-lite)
 
 _For more information, please refer to the [Deployment](https://github.com/canturan10/satellighte/blob/master/deployment)_
 
@@ -267,6 +268,25 @@ The references used in the development of the project are as follows.
 
 <!-- CITATIONS -->
 ## Citations
+
+```bibtex
+@article{DBLP:journals/corr/ChengHL17,
+  author    = {Gong Cheng and
+               Junwei Han and
+               Xiaoqiang Lu},
+  title     = {Remote Sensing Image Scene Classification: Benchmark and State of
+               the Art},
+  journal   = {CoRR},
+  volume    = {abs/1703.00121},
+  year      = {2017},
+  url       = {http://arxiv.org/abs/1703.00121},
+  eprinttype = {arXiv},
+  eprint    = {1703.00121},
+  timestamp = {Mon, 02 Dec 2019 09:32:19 +0100},
+  biburl    = {https://dblp.org/rec/journals/corr/ChengHL17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
 
 ```bibtex
 @article{helber2019eurosat,

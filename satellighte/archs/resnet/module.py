@@ -1,16 +1,14 @@
 import os
 from typing import Dict, List
-from functools import partial
 
 import torch
 import torch.nn as nn
+from .blocks.resnet import Res_Net, Bottleneck
 
-from .blocks.efficientnet import Efficient_Net
 
-
-class EfficientNet(nn.Module):
+class ResNet(nn.Module):
     """
-    Implementation of EfficientNet: Deep Residual Learning for Image Recognition
+    Implementation of ResNet: Deep Residual Learning for Image Recognition
 
     The network is the one described in arxiv.org/abs/1512.03385 .
     """
@@ -18,7 +16,7 @@ class EfficientNet(nn.Module):
     # pylint: disable=no-member
 
     __CONFIGS__ = {
-        "b0": {
+        "18": {
             "input": {
                 "input_size": 224,
                 "normalized_input": True,
@@ -26,206 +24,76 @@ class EfficientNet(nn.Module):
                 "std": [0.229, 0.224, 0.225],
             },
             "model": {
-                "inverted_residual_setting": "v1",
-                "compound_coef": 0,
-                "dropout": 0.2,
-                "width_mult": 1.0,
-                "depth_mult": 1.0,
-                "pretrained": False,
-                "norm_layer": {
-                    "eps": 1e-5,
-                    "momentum": 0.1,
-                },
-            },
-        },
-        "b1": {
-            "input": {
-                "input_size": 240,
-                "normalized_input": True,
-                "mean": [0.485, 0.456, 0.406],
-                "std": [0.229, 0.224, 0.225],
-            },
-            "model": {
-                "inverted_residual_setting": "v1",
-                "dropout": 0.25,
-                "width_mult": 1.0,
-                "depth_mult": 1.1,
-                "pretrained": False,
-                "norm_layer": {
-                    "eps": 1e-5,
-                    "momentum": 0.1,
-                },
-            },
-        },
-        "b2": {
-            "input": {
-                "input_size": 288,
-                "normalized_input": True,
-                "mean": [0.485, 0.456, 0.406],
-                "std": [0.229, 0.224, 0.225],
-            },
-            "model": {
-                "inverted_residual_setting": "v1",
+                "block": Bottleneck,
+                "layer": [2, 2, 2, 2],
+                "groups": 1,
+                "width_per_group": 64,
                 "dropout": 0.3,
-                "width_mult": 1.1,
-                "depth_mult": 1.2,
                 "pretrained": False,
-                "norm_layer": {
-                    "eps": 1e-5,
-                    "momentum": 0.1,
-                },
             },
         },
-        "b3": {
+        "34": {
             "input": {
-                "input_size": 300,
+                "input_size": 224,
                 "normalized_input": True,
                 "mean": [0.485, 0.456, 0.406],
                 "std": [0.229, 0.224, 0.225],
             },
             "model": {
-                "inverted_residual_setting": "v1",
+                "block": Bottleneck,
+                "layer": [3, 4, 6, 8],
+                "groups": 1,
+                "width_per_group": 64,
                 "dropout": 0.3,
-                "width_mult": 1.2,
-                "depth_mult": 1.4,
                 "pretrained": False,
-                "norm_layer": {
-                    "eps": 1e-5,
-                    "momentum": 0.1,
-                },
             },
         },
-        "b4": {
+        "50": {
             "input": {
-                "input_size": 380,
+                "input_size": 224,
                 "normalized_input": True,
                 "mean": [0.485, 0.456, 0.406],
                 "std": [0.229, 0.224, 0.225],
             },
             "model": {
-                "inverted_residual_setting": "v1",
-                "dropout": 0.4,
-                "width_mult": 1.4,
-                "depth_mult": 1.8,
-                "pretrained": False,
-                "norm_layer": {
-                    "eps": 1e-5,
-                    "momentum": 0.1,
-                },
-            },
-        },
-        "b5": {
-            "input": {
-                "input_size": 456,
-                "normalized_input": True,
-                "mean": [0.485, 0.456, 0.406],
-                "std": [0.229, 0.224, 0.225],
-            },
-            "model": {
-                "inverted_residual_setting": "v1",
-                "dropout": 0.4,
-                "width_mult": 1.6,
-                "depth_mult": 2.2,
-                "pretrained": False,
-                "norm_layer": {
-                    "eps": 0.001,
-                    "momentum": 0.01,
-                },
-            },
-        },
-        "b6": {
-            "input": {
-                "input_size": 528,
-                "normalized_input": True,
-                "mean": [0.485, 0.456, 0.406],
-                "std": [0.229, 0.224, 0.225],
-            },
-            "model": {
-                "inverted_residual_setting": "v1",
-                "dropout": 0.5,
-                "width_mult": 1.8,
-                "depth_mult": 2.6,
-                "pretrained": False,
-                "norm_layer": {
-                    "eps": 0.001,
-                    "momentum": 0.01,
-                },
-            },
-        },
-        "b7": {
-            "input": {
-                "input_size": 600,
-                "normalized_input": True,
-                "mean": [0.485, 0.456, 0.406],
-                "std": [0.229, 0.224, 0.225],
-            },
-            "model": {
-                "inverted_residual_setting": "v1",
-                "dropout": 0.5,
-                "width_mult": 2.0,
-                "depth_mult": 3.1,
-                "pretrained": False,
-                "norm_layer": {
-                    "eps": 0.001,
-                    "momentum": 0.01,
-                },
-            },
-        },
-        "v2-s": {
-            "input": {
-                "input_size": 384,
-                "normalized_input": True,
-                "mean": [0.485, 0.456, 0.406],
-                "std": [0.229, 0.224, 0.225],
-            },
-            "model": {
-                "inverted_residual_setting": "v2_s",
-                "dropout": 0.2,
-                "width_mult": 1.0,
-                "depth_mult": 1.0,
-                "pretrained": False,
-                "norm_layer": {
-                    "eps": 1e-3,
-                    "momentum": 0.1,
-                },
-            },
-        },
-        "v2-m": {
-            "input": {
-                "input_size": 480,
-                "normalized_input": True,
-                "mean": [0.485, 0.456, 0.406],
-                "std": [0.229, 0.224, 0.225],
-            },
-            "model": {
-                "inverted_residual_setting": "v2_m",
+                "block": Bottleneck,
+                "layer": [3, 4, 6, 3],
+                "groups": 1,
+                "width_per_group": 64,
                 "dropout": 0.3,
-                "width_mult": 1.0,
-                "depth_mult": 1.0,
                 "pretrained": False,
-                "norm_layer": {
-                    "eps": 1e-3,
-                    "momentum": 0.1,
-                },
             },
         },
-        "v2-l": {
+        "101": {
             "input": {
-                "input_size": 480,
+                "input_size": 224,
                 "normalized_input": True,
                 "mean": [0.485, 0.456, 0.406],
                 "std": [0.229, 0.224, 0.225],
             },
             "model": {
-                "inverted_residual_setting": "v2_l",
-                "dropout": 0.4,
-                "width_mult": 1.0,
-                "depth_mult": 1.0,
+                "block": Bottleneck,
+                "layer": [3, 4, 23, 3],
+                "groups": 1,
+                "width_per_group": 64,
+                "dropout": 0.3,
                 "pretrained": False,
-                "norm_layer": {
-                    "eps": 1e-3,
-                    "momentum": 0.1,
-                },
+            },
+        },
+        "152": {
+            "input": {
+                "input_size": 224,
+                "normalized_input": True,
+                "mean": [0.485, 0.456, 0.406],
+                "std": [0.229, 0.224, 0.225],
+            },
+            "model": {
+                "block": Bottleneck,
+                "layer": [3, 8, 36, 3],
+                "groups": 1,
+                "width_per_group": 64,
+                "dropout": 0.3,
+                "pretrained": False,
             },
         },
     }
@@ -240,19 +108,13 @@ class EfficientNet(nn.Module):
         self.labels = labels
         self.num_classes = len(self.labels)
 
-        self.norm_layer = partial(
-            nn.BatchNorm2d,
-            eps=self.config["model"]["norm_layer"]["eps"],
-            momentum=self.config["model"]["norm_layer"]["momentum"],
-        )
-
-        self.backbone = Efficient_Net(
-            inverted_residual_setting=self.config["model"]["inverted_residual_setting"],
-            dropout=self.config["model"]["dropout"],
-            stochastic_depth_prob=0.2,
+        self.backbone = Res_Net(
+            block=self.config["model"]["block"],
+            layers=self.config["model"]["layer"],
             num_classes=self.num_classes,
-            width_mult=self.config["model"]["width_mult"],
-            depth_mult=self.config["model"]["depth_mult"],
+            groups=self.config["model"]["groups"],
+            width_per_group=self.config["model"]["width_per_group"],
+            dropout=self.config["model"]["dropout"],
         )
 
     def forward(self, inputs):
@@ -288,7 +150,7 @@ class EfficientNet(nn.Module):
         labels = ["cls1", "cls2"] if labels is None else labels
 
         return cls(
-            config=EfficientNet.__CONFIGS__[config],
+            config=ResNet.__CONFIGS__[config],
             labels=labels,
             **kwargs,
         )
@@ -319,7 +181,7 @@ class EfficientNet(nn.Module):
         )
 
         model = cls(
-            config=EfficientNet.__CONFIGS__[config],
+            config=ResNet.__CONFIGS__[config],
             labels=s_dict["labels"],
             *args,
             **kwargs,

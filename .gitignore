@@ -3,6 +3,8 @@ satellighte/datas/*
 *.pth
 *.pt
 *.onnx
+*.tflite
+*.pb
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
