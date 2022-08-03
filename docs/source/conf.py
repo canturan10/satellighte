@@ -14,17 +14,17 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath("../.."))
-import satellighte
+import satellighte as sat
 
 
 # -- Project information -----------------------------------------------------
 
-project = "satellighte"
-copyright = "2022, Oguzcan Turan"
-author = "Oguzcan Turan"
+project = "Satellighte"
+copyright = sat.__copyright__
+author = sat.__author__
 
 # The full version, including alpha/beta/rc tags
-release = satellighte.__version__
+release = sat.__version__
 
 
 # -- General configuration ---------------------------------------------------
