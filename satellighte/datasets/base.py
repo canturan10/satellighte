@@ -31,6 +31,7 @@ class BaseDataset(Dataset):
         ids: List[str],
         targets: List[Dict],
         transforms=None,
+        *args,
         **kwargs,
     ):
         super().__init__()
