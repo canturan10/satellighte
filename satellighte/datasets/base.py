@@ -1,10 +1,25 @@
-from typing import List, Dict, Tuple
 import copy
+from typing import Dict, List, Tuple
 
+import imageio
+import numpy as np
 import torch
 from torch.utils.data import Dataset
-import numpy as np
-import imageio
+
+
+class Identity(torch.nn.Module):
+    def __init__(self):
+        super(Identity, self).__init__()
+
+    def forward(self, X: torch.Tensor) -> torch.Tensor:
+        """Accepts all kind of tensor and returns back
+
+        Arguments:
+                X {torch.Tensor} -- any shape of tensor
+        Returns:
+                torch.Tensor -- same as the input tensor without any copy
+        """
+        return X
 
 
 class BaseDataset(Dataset):

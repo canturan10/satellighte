@@ -6,7 +6,7 @@ from typing import Any, Callable, List, Optional
 import torch
 from torch import nn
 
-from .layers import ConvNormActivation, MBConvConfig
+from .layers import ConvNormActivation, MBConvConfig, FusedMBConvConfig
 
 
 class Efficient_Net(nn.Module):
@@ -63,6 +63,60 @@ class Efficient_Net(nn.Module):
                 ),
             ]
             last_channel = None
+        elif inverted_residual_setting == "v2_s":
+            inverted_residual_setting = [
+                FusedMBConvConfig(1, 3, 1, 24, 24, 2),
+                FusedMBConvConfig(4, 3, 2, 24, 48, 4),
+                FusedMBConvConfig(4, 3, 2, 48, 64, 4),
+                MBConvConfig(
+                    4, 3, 2, 64, 128, 6, width_mult=width_mult, depth_mult=depth_mult
+                ),
+                MBConvConfig(
+                    6, 3, 1, 128, 160, 9, width_mult=width_mult, depth_mult=depth_mult
+                ),
+                MBConvConfig(
+                    6, 3, 2, 160, 256, 15, width_mult=width_mult, depth_mult=depth_mult
+                ),
+            ]
+            last_channel = 1280
+        elif inverted_residual_setting == "v2_m":
+            inverted_residual_setting = [
+                FusedMBConvConfig(1, 3, 1, 24, 24, 3),
+                FusedMBConvConfig(4, 3, 2, 24, 48, 5),
+                FusedMBConvConfig(4, 3, 2, 48, 80, 5),
+                MBConvConfig(
+                    4, 3, 2, 80, 160, 7, width_mult=width_mult, depth_mult=depth_mult
+                ),
+                MBConvConfig(
+                    6, 3, 1, 160, 176, 14, width_mult=width_mult, depth_mult=depth_mult
+                ),
+                MBConvConfig(
+                    6, 3, 2, 176, 304, 18, width_mult=width_mult, depth_mult=depth_mult
+                ),
+                MBConvConfig(
+                    6, 3, 1, 304, 512, 5, width_mult=width_mult, depth_mult=depth_mult
+                ),
+            ]
+            last_channel = 1280
+        elif inverted_residual_setting == "v2_l":
+            inverted_residual_setting = [
+                FusedMBConvConfig(1, 3, 1, 32, 32, 4),
+                FusedMBConvConfig(4, 3, 2, 32, 64, 7),
+                FusedMBConvConfig(4, 3, 2, 64, 96, 7),
+                MBConvConfig(
+                    4, 3, 2, 96, 192, 10, width_mult=width_mult, depth_mult=depth_mult
+                ),
+                MBConvConfig(
+                    6, 3, 1, 192, 224, 19, width_mult=width_mult, depth_mult=depth_mult
+                ),
+                MBConvConfig(
+                    6, 3, 2, 224, 384, 25, width_mult=width_mult, depth_mult=depth_mult
+                ),
+                MBConvConfig(
+                    6, 3, 1, 384, 640, 7, width_mult=width_mult, depth_mult=depth_mult
+                ),
+            ]
+            last_channel = 1280
         else:
             raise ValueError(f"Unknown network structure: {inverted_residual_setting}")
 

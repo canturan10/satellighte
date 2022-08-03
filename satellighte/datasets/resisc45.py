@@ -10,9 +10,9 @@ from ..core import _download_file_from_url
 from .base import BaseDataset, Identity
 
 
-class EuroSAT(BaseDataset):
+class RESISC45(BaseDataset):
     """
-    Eurosat is a dataset and deep learning benchmark for land use and land cover classification. The dataset is based on Sentinel-2 satellite images covering 13 spectral bands and consisting out of 10 classes with in total 27,000 labeled and geo-referenced images.
+    RESISC45 dataset is a dataset for Remote Sensing Image Scene Classification (RESISC). It contains 31,500 RGB images of size 256×256 divided into 45 scene classes, each class containing 700 images.
     """
 
     __phases__ = (
@@ -125,18 +125,18 @@ class EuroSAT(BaseDataset):
 
         os.makedirs(self.root_dir, exist_ok=True)
         _download_file_from_url(
-            "https://drive.google.com/u/0/uc?id=1_QZVrVVmybvY8_pJjCdnev9THLvS3739&export=download&confirm=t",
-            os.path.join(self.root_dir, "eurosat.zip"),
+            "https://drive.google.com/u/0/uc?id=1PCesRqeXYINcsulnTixVjR15xFNXropZ&export=download&confirm=t",
+            os.path.join(self.root_dir, "resisc45.zip"),
         )
         extract_archive(
-            os.path.join(self.root_dir, "eurosat.zip"),
+            os.path.join(self.root_dir, "resisc45.zip"),
             self.root_dir,
             remove_finished=True,
         )
 
 
 if __name__ == "__main__":
-    data = EuroSAT("satellighte/datas/eurosat")
+    data = RESISC45("satellighte/datas/resisc45")
     print(data[0])
     print(data.classes)
     print(len(data.classes))
