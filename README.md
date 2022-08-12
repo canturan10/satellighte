@@ -40,6 +40,7 @@
             </ul>
         </li>
         <li><a href="#usage-examples">Usage Examples</a></li>
+        <li><a href="#apis">APIs</a></li>
         <li><a href="#architectures">Architectures</a></li>
         <li><a href="#datasets">Datasets</a></li>
         <li><a href="#deployments">Deployments</a></li>
@@ -119,6 +120,73 @@ results = model.predict(img)
 ```
 
 <!-- _For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_ -->
+
+<!-- APIs -->
+## APIs
+
+### 1- Get Available Models
+
+```python
+import satellighte as sat
+sat.available_models()
+# ['efficientnet_b0_eurosat', 'mobilenetv2_default_eurosat']
+```
+
+### 2- Get Available Versions for a Spesific Model
+
+```python
+import satellighte as sat
+model_name = 'efficientnet_b0_eurosat'
+sat.get_model_versions(model_name)
+# ['0']
+```
+
+### 3- Get Latest Version for a Spesific Model
+
+```python
+import satellighte as sat
+model_name = 'efficientnet_b0_eurosat'
+sat.get_model_latest_version(model_name)
+# '0'
+```
+
+### 4- Get Pretrained Model
+
+```python
+import satellighte as sat
+model_name = 'efficientnet_b0_eurosat'
+model = sat.Classifier.from_pretrained(model_name, version=None) # if version none is given than latest version will be used.
+# model: pl.LightningModule
+```
+
+### 5- Get Model with Random Weight Initialization
+
+```python
+import satellighte as sat
+arch = 'efficientnet'
+config = 'b0'
+model = sat.Classifier.build(arch, config)
+# model: pl.LightningModule
+```
+
+### 6- Get Pretrained Arch Model
+
+```python
+import satellighte as sat
+model_name = 'efficientnet_b0_eurosat'
+model = sat.Classifier.from_pretrained_arch(model_name, version=None) # if version none is given than latest version will be used.
+# model: torch.nn.Module
+```
+
+### 7- Get Arch Model with Random Weight Initialization
+
+```python
+import satellighte as sat
+arch = 'efficientnet'
+config = 'b0'
+model = sat.Classifier.build_arch(arch, config)
+# model: torch.nn.Module
+```
 
 <!-- ARCHITECTURES -->
 ## Architectures
@@ -270,7 +338,10 @@ The references used in the development of the project are as follows.
 <!-- CITATIONS -->
 ## Citations
 
-```bibtex
+<details>
+  <summary>Click to expand!</summary>
+
+  ```bibtex
 @article{DBLP:journals/corr/ChengHL17,
   author    = {Gong Cheng and
                Junwei Han and
@@ -367,7 +438,9 @@ The references used in the development of the project are as follows.
 }
 ```
 
-Give a ⭐️ if this project helped you!
+</details>
+
 ![-----------------------------------------------------](https://raw.githubusercontent.com/canturan10/readme-template/master/src/colored_4b.png)
+Give a ⭐️ if this project helped you!
 
 _This readme file is made using the [readme-template](https://github.com/canturan10/readme-template)_

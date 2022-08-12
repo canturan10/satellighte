@@ -7,6 +7,22 @@ import setuptools
 _PATH_ROOT = os.path.dirname(__file__)
 
 
+def _load_readme(file_name: str = "README.md") -> str:
+    """
+    Load readme from a text file.
+
+    Args:
+        file_name (str, optional): File name that contains the readme. Defaults to "README.md".
+
+    Returns:
+        str: Readme text.
+    """
+    with open(os.path.join(_PATH_ROOT, file_name), "r", encoding="utf-8") as file:
+        readme = file.read()
+
+    return readme
+
+
 def _load_requirements(
     file_name: str = "requirements.txt", comment_char: str = "#"
 ) -> List[str]:
@@ -96,7 +112,7 @@ setuptools.setup(
     license=about.__license__,
     packages=setuptools.find_packages(),
     include_package_data=True,
-    long_description=about.__long_description__,
+    long_description=_load_readme(),
     long_description_content_type="text/markdown",
     python_requires=">=3.7",
     extras_require=extras_require,

@@ -40,6 +40,7 @@
             </ul>
         </li>
         <li><a href="#usage-examples">Usage Examples</a></li>
+        <li><a href="#apis">APIs</a></li>
         <li><a href="#architectures">Architectures</a></li>
         <li><a href="#datasets">Datasets</a></li>
         <li><a href="#deployments">Deployments</a></li>
@@ -120,12 +121,79 @@ results = model.predict(img)
 
 <!-- _For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_ -->
 
+<!-- APIs -->
+## APIs
+
+### 1- Get Available Models
+
+```python
+import satellighte as sat
+sat.available_models()
+# ['efficientnet_b0_eurosat', 'mobilenetv2_default_eurosat']
+```
+
+### 2- Get Available Versions for a Spesific Model
+
+```python
+import satellighte as sat
+model_name = 'efficientnet_b0_eurosat'
+sat.get_model_versions(model_name)
+# ['0']
+```
+
+### 3- Get Latest Version for a Spesific Model
+
+```python
+import satellighte as sat
+model_name = 'efficientnet_b0_eurosat'
+sat.get_model_latest_version(model_name)
+# '0'
+```
+
+### 4- Get Pretrained Model
+
+```python
+import satellighte as sat
+model_name = 'efficientnet_b0_eurosat'
+model = sat.Classifier.from_pretrained(model_name, version=None) # if version none is given than latest version will be used.
+# model: pl.LightningModule
+```
+
+### 5- Get Model with Random Weight Initialization
+
+```python
+import satellighte as sat
+arch = 'efficientnet'
+config = 'b0'
+model = sat.Classifier.build(arch, config)
+# model: pl.LightningModule
+```
+
+### 6- Get Pretrained Arch Model
+
+```python
+import satellighte as sat
+model_name = 'efficientnet_b0_eurosat'
+model = sat.Classifier.from_pretrained_arch(model_name, version=None) # if version none is given than latest version will be used.
+# model: torch.nn.Module
+```
+
+### 7- Get Arch Model with Random Weight Initialization
+
+```python
+import satellighte as sat
+arch = 'efficientnet'
+config = 'b0'
+model = sat.Classifier.build_arch(arch, config)
+# model: torch.nn.Module
+```
+
 <!-- ARCHITECTURES -->
 ## Architectures
 
 - [x] [MobileNetV2](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#mobilenetv2)
 - [x] [EfficientNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#efficientnet)
-- [ ] [ResNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md)
+- [x] [ResNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#resnet)
 - [ ] [CoAtNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md)
 
 _For more information, please refer to the [Architectures](https://github.com/canturan10/satellighte/blob/master/satellighte/archs)_
@@ -265,11 +333,15 @@ The references used in the development of the project are as follows.
 - [GitHub Pages](https://pages.github.com)
 - [FastFace](https://github.com/borhanMorphy/fastface)
 - [PyTorch Lightning](https://github.com/PyTorchLightning/pytorch-lightning)
+- [Torchvision](https://github.com/pytorch/vision)
 
 <!-- CITATIONS -->
 ## Citations
 
-```bibtex
+<details>
+  <summary>Click to expand!</summary>
+
+  ```bibtex
 @article{DBLP:journals/corr/ChengHL17,
   author    = {Gong Cheng and
                Junwei Han and
@@ -347,7 +419,28 @@ The references used in the development of the project are as follows.
 }
 ```
 
-Give a ⭐️ if this project helped you!
+```BibTeX
+@article{DBLP:journals/corr/HeZRS15,
+  author    = {Kaiming He and
+               Xiangyu Zhang and
+               Shaoqing Ren and
+               Jian Sun},
+  title     = {Deep Residual Learning for Image Recognition},
+  journal   = {CoRR},
+  volume    = {abs/1512.03385},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1512.03385},
+  eprinttype = {arXiv},
+  eprint    = {1512.03385},
+  timestamp = {Wed, 17 Apr 2019 17:23:45 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/HeZRS15.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
+</details>
+
 ![-----------------------------------------------------](https://raw.githubusercontent.com/canturan10/readme-template/master/src/colored_4b.png)
+Give a ⭐️ if this project helped you!
 
 _This readme file is made using the [readme-template](https://github.com/canturan10/readme-template)_

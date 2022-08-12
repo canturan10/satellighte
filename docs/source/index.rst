@@ -26,6 +26,7 @@ Satellite Image Classification
    starter/about.md
    starter/prerequisites.md
    starter/installation.md
+   starter/apis.md
    starter/archs.md
    starter/datasets.md
    starter/deployment.md
