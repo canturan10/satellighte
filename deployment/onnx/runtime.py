@@ -1,7 +1,7 @@
 import argparse
 import onnxruntime as ort
 import numpy as np
-import imageio.v2 as imageio
+import imageio as imageio
 
 
 def parse_arguments():

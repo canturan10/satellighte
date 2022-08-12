@@ -14,7 +14,14 @@
         •
         <a href="https://satellighte.readthedocs.io/">Docs</a>
         •
-        <a href="https://share.streamlit.io/canturan10/satellighte-streamlit/app.py">Demo</a>
+        <a href="https://pypi.org/project/satellighte/">Pypi</a>
+    </strong>
+</p>
+<p align="center">
+    <strong>
+        <a href="https://share.streamlit.io/canturan10/satellighte-streamlit/app.py">Demo Page</a>
+        •
+        <a href="https://huggingface.co/spaces/canturan10/satellighte">Hugging Face</a>
     </strong>
 </p>
 
@@ -58,7 +65,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Satellighte
 
-**Satellighte** is an image classification library  that consist state-of-the-art deep learning methods. It is a combination of the words **'Satellite'** and **'Light'**, and its purpose is to establish a light structure to classify satellite images, but to obtain robust results.
+**Satellighte** is an image classification library  that consist state-of-the-art deep learning methods. It is a combination of the words **'Satellite'** and **'Light'**, and its purpose is to establish a light structure to classify satellite images, but to obt<https://huggingface.co/spaces/canturan10/satellighteain> robust results.
 
 > **Satellite image classification** is the most significant technique used in remote sensing for the computerized study and pattern recognition of satellite information, which is based on diversity structures of the image that involve rigorous validation of the training samples depending on the used classification algorithm.
 >
@@ -441,6 +448,7 @@ The references used in the development of the project are as follows.
 </details>
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/canturan10/readme-template/master/src/colored_4b.png)
+
 Give a ⭐️ if this project helped you!
 
 _This readme file is made using the [readme-template](https://github.com/canturan10/readme-template)_
