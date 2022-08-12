@@ -338,7 +338,10 @@ The references used in the development of the project are as follows.
 <!-- CITATIONS -->
 ## Citations
 
-```bibtex
+<details>
+  <summary>Click to expand!</summary>
+
+  ```bibtex
 @article{DBLP:journals/corr/ChengHL17,
   author    = {Gong Cheng and
                Junwei Han and
@@ -435,7 +438,9 @@ The references used in the development of the project are as follows.
 }
 ```
 
-Give a ⭐️ if this project helped you!
+</details>
+
 ![-----------------------------------------------------](https://raw.githubusercontent.com/canturan10/readme-template/master/src/colored_4b.png)
+Give a ⭐️ if this project helped you!
 
 _This readme file is made using the [readme-template](https://github.com/canturan10/readme-template)_
