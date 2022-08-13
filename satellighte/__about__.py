@@ -1,7 +1,5 @@
 import time
 
-from satellighte.version import __version__ as pkg_version
-
 _this_year = time.strftime("%Y")
 __author__ = "Oguzcan Turan"
 __author_email__ = "can.turan.10@gmail.com"
@@ -13,7 +11,15 @@ __homepage__ = "https://github.com/canturan10/satellighte"
 __license__ = "MIT License"
 __license_url__ = __homepage__ + "/blob/master/LICENSE"
 __pkg_name__ = "satellighte"
-__version__ = pkg_version
+
+
+def pkg_version() -> str:
+    with open("satellighte/version.py", "r") as foo:
+        version = foo.read().split("=")[-1].replace("'", "").replace('"', "").strip()
+    return version
+
+
+__version__ = pkg_version()
 
 __all__ = [
     "__author__",
