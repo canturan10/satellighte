@@ -14,7 +14,14 @@
         •
         <a href="https://satellighte.readthedocs.io/">Docs</a>
         •
-        <a href="https://share.streamlit.io/canturan10/satellighte-streamlit/app.py">Demo</a>
+        <a href="https://pypi.org/project/satellighte/">Pypi</a>
+    </strong>
+</p>
+<p align="center">
+    <strong>
+        <a href="https://share.streamlit.io/canturan10/satellighte-streamlit/app.py">Demo Page</a>
+        •
+        <a href="https://huggingface.co/spaces/canturan10/satellighte">Hugging Face</a>
     </strong>
 </p>
 
@@ -441,6 +448,7 @@ The references used in the development of the project are as follows.
 </details>
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/canturan10/readme-template/master/src/colored_4b.png)
+
 Give a ⭐️ if this project helped you!
 
 _This readme file is made using the [readme-template](https://github.com/canturan10/readme-template)_
