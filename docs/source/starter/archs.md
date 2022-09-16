@@ -1,4 +1,9 @@
-# Architectures
+# Architectures  <!-- omit in toc -->
+
+- [MobileNetV2](#mobilenetv2)
+- [EfficientNet](#efficientnet)
+- [ResNet](#resnet)
+- [Citation](#citation)
 
 ## MobileNetV2
 

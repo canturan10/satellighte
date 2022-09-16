@@ -63,7 +63,7 @@ def main(args):
     model = sat.Classifier.from_pretrained(args.model_name, version=version)
     model.eval()
     model.to(args.device)
-    print(model.summarize(max_depth=1))
+    model.summarize()
 
     if os.path.isdir(args.source):
         for file in os.listdir(args.source):

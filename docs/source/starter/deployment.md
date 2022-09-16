@@ -1,7 +1,28 @@
 <p align="center">
     <img src="https://raw.githubusercontent.com/canturan10/satellighte/master/src/deployment.png" align="center" alt="Deployment" />
 
-# Deployments
+# Deployments <!-- omit in toc -->
+
+- [FastAPI](#fastapi)
+  - [Install Dependency For FastAPI](#install-dependency-for-fastapi)
+  - [Run AI Service](#run-ai-service)
+  - [Build AI Service As Docker Image](#build-ai-service-as-docker-image)
+  - [Run AI Service As Docker Container](#run-ai-service-as-docker-container)
+- [ONNX](#onnx)
+  - [Install Dependency For ONNX](#install-dependency-for-onnx)
+  - [Convert Model to ONNX](#convert-model-to-onnx)
+  - [ONNX Runtime](#onnx-runtime)
+- [DeepSparse](#deepsparse)
+  - [Install Dependency For DeepSparse](#install-dependency-for-deepsparse)
+  - [DeepSparse Runtime](#deepsparse-runtime)
+- [TensorFlow](#tensorflow)
+  - [Install Dependency For TensorFlow](#install-dependency-for-tensorflow)
+  - [Convert ONNX Model to TensorFlow](#convert-onnx-model-to-tensorflow)
+  - [TensorFlow Runtime](#tensorflow-runtime)
+- [TensorFlow Lite](#tensorflow-lite)
+  - [Install Dependency For TensorFlow Lite](#install-dependency-for-tensorflow-lite)
+  - [Convert TensorFlow Model to TensorFlow Lite](#convert-tensorflow-model-to-tensorflow-lite)
+  - [TensorFlow Lite Runtime](#tensorflow-lite-runtime)
 
 ## FastAPI
 
@@ -62,12 +83,14 @@ pip install onnxruntime~=1.10.0
 
 ```bash
 python deployment/onnx/export.py
+#  python deployment/onnx/export.py --model_name mobilenetv2_default_eurosat --version 0
 ```
 
 ### ONNX Runtime
 
 ```bash
 python deployment/onnx/runtime.py
+#  python deployment/onnx/runtime.py -m satellighte/models/mobilenetv2_default_eurosat/v0/mobilenetv2_default_eurosat.onnx -s src/eurosat_samples/AnnualCrop.jpg
 ```
 
 ## DeepSparse
@@ -86,6 +109,7 @@ pip install deepsparse~=1.0.2
 
 ```bash
 python deployment/deepsparse/runtime.py
+# python deployment/deepsparse/runtime.py -m -m satellighte/models/mobilenetv2_default_eurosat/v0/mobilenetv2_default_eurosat.onnx -s src/eurosat_samples/AnnualCrop.jpg
 ```
 
 ## TensorFlow

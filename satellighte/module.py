@@ -37,6 +37,9 @@ class Classifier(pl.LightningModule):
     def labels(self):
         return self.model.labels
 
+    def summarize(self):
+        print(pl.utilities.model_summary.model_summary.summarize(self))
+
     # WARNING: This function should only be used during training. not inference
     def forward(
         self,

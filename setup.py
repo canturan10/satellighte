@@ -114,7 +114,7 @@ setuptools.setup(
     include_package_data=True,
     long_description=_load_readme(),
     long_description_content_type="text/markdown",
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     extras_require=extras_require,
     setup_requires=[],
     install_requires=__requirements__,
@@ -126,7 +126,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
         # Specify the Python versions you support here.
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
     ],
