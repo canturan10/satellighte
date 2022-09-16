@@ -12,15 +12,6 @@ __license__ = "MIT License"
 __license_url__ = __homepage__ + "/blob/master/LICENSE"
 __pkg_name__ = "satellighte"
 
-
-def pkg_version() -> str:
-    with open("satellighte/version.py", "r") as foo:
-        version = foo.read().split("=")[-1].replace("'", "").replace('"', "").strip()
-    return version
-
-
-__version__ = pkg_version()
-
 __all__ = [
     "__author__",
     "__author_email__",
@@ -30,5 +21,4 @@ __all__ = [
     "__license__",
     "__license_url__",
     "__pkg_name__",
-    "__version__",
 ]
