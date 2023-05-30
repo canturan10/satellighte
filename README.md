@@ -260,7 +260,7 @@ Alternatively see the `GitHub` documentation on [creating a pull request](https:
                 <h3>
                     You ?
                 </h3>
-                <img src="https://raw.githubusercontent.com/canturan10/readme-template/master/src/you_satellighte.png"
+                <img src="https://raw.githubusercontent.com/canturan10/satellighte/master/src/you_satellighte.png"
                     width="200px;" alt="Oğuzcan Turan" /><br>
                 <a href="#">
                     <img src="https://img.shields.io/badge/-Reserved%20Place-red?style=flat&logoColor=white"
