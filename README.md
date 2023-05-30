@@ -17,14 +17,20 @@
         <a href="https://pypi.org/project/satellighte/">Pypi</a>
     </strong>
 </p>
+
 <p align="center">
     <strong>
         <a href="https://share.streamlit.io/canturan10/satellighte-streamlit/app.py">Demo Page</a>
-        •
-        <a href="https://huggingface.co/spaces/canturan10/satellighte">Hugging Face</a>
     </strong>
 </p>
 
+<p align="center">
+    <strong>
+        <a href="https://huggingface.co/spaces/canturan10/satellighte"><img src="https://img.shields.io/badge/🤗-Open%20In%20Spaces-blue" /></a>
+    </strong>
+</p>
+<p align="center">
+    <img width="30%" src="https://raw.githubusercontent.com/canturan10/satellighte/master/src/satellighte.gif" align="center" alt="Satellighte" />
 <!-- TABLE OF CONTENTS -->
 <details>
     <summary>
@@ -79,10 +85,10 @@ Before you begin, ensure you have met the following requirements:
 | requirement       | version  |
 | ----------------- | -------- |
 | imageio           | ~=2.15.0 |
-| numpy             | ~=1.21.0 |
-| pytorch_lightning | ~=1.6.0  |
+| numpy             | ~=1.22.0 |
+| pytorch_lightning | ~=1.7.0  |
 | scikit-learn      | ~=1.0.2  |
-| torch             | ~=1.8.1  |
+| torch             | ~=1.9.1  |
 
 <!-- INSTALLATION -->
 ## Installation
@@ -126,82 +132,26 @@ results = model.predict(img)
 # [{'cls1': 0.55, 'cls2': 0.45}]
 ```
 
-<!-- _For more examples, please refer to the [Documentation](https://github.com/canturan10/readme-template)_ -->
-
 <!-- APIs -->
 ## APIs
 
-### 1- Get Available Models
+- [Available Models](https://github.com/canturan10/satellighte/blob/master/satellighte/api/README.md#available-models)
+- [Available Versions for a Spesific Model](https://github.com/canturan10/satellighte/blob/master/satellighte/api/README.md#available-versions-for-a-spesific-model)
+- [Latest Version for a Spesific Model](https://github.com/canturan10/satellighte/blob/master/satellighte/api/README.md#latest-version-for-a-spesific-model)
+- [Pretrained Model](https://github.com/canturan10/satellighte/blob/master/satellighte/api/README.md#pretrained-model)
+- [Model with Random Weight Initialization](https://github.com/canturan10/satellighte/blob/master/satellighte/api/README.md#model-with-random-weight-initialization)
+- [Pretrained Arch Model](https://github.com/canturan10/satellighte/blob/master/satellighte/api/README.md#pretrained-arch-model)
+- [Arch Model with Random Weight Initialization](https://github.com/canturan10/satellighte/blob/master/satellighte/api/README.md#arch-model-with-random-weight-initialization)
 
-```python
-import satellighte as sat
-sat.available_models()
-# ['efficientnet_b0_eurosat', 'mobilenetv2_default_eurosat']
-```
-
-### 2- Get Available Versions for a Spesific Model
-
-```python
-import satellighte as sat
-model_name = 'efficientnet_b0_eurosat'
-sat.get_model_versions(model_name)
-# ['0']
-```
-
-### 3- Get Latest Version for a Spesific Model
-
-```python
-import satellighte as sat
-model_name = 'efficientnet_b0_eurosat'
-sat.get_model_latest_version(model_name)
-# '0'
-```
-
-### 4- Get Pretrained Model
-
-```python
-import satellighte as sat
-model_name = 'efficientnet_b0_eurosat'
-model = sat.Classifier.from_pretrained(model_name, version=None) # if version none is given than latest version will be used.
-# model: pl.LightningModule
-```
-
-### 5- Get Model with Random Weight Initialization
-
-```python
-import satellighte as sat
-arch = 'efficientnet'
-config = 'b0'
-model = sat.Classifier.build(arch, config)
-# model: pl.LightningModule
-```
-
-### 6- Get Pretrained Arch Model
-
-```python
-import satellighte as sat
-model_name = 'efficientnet_b0_eurosat'
-model = sat.Classifier.from_pretrained_arch(model_name, version=None) # if version none is given than latest version will be used.
-# model: torch.nn.Module
-```
-
-### 7- Get Arch Model with Random Weight Initialization
-
-```python
-import satellighte as sat
-arch = 'efficientnet'
-config = 'b0'
-model = sat.Classifier.build_arch(arch, config)
-# model: torch.nn.Module
-```
+_For more information, please refer to the [APIs](https://github.com/canturan10/satellighte/blob/master/satellighte/api)_
 
 <!-- ARCHITECTURES -->
 ## Architectures
 
-- [x] [MobileNetV2](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#mobilenetv2)
+- [x] [CoAtNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#coatnet)
 - [x] [EfficientNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#efficientnet)
+- [x] [MobileNetV2](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#mobilenetv2)
 - [x] [ResNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#resnet)
-- [ ] [CoAtNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md)
 
 _For more information, please refer to the [Architectures](https://github.com/canturan10/satellighte/blob/master/satellighte/archs)_
 
@@ -310,7 +260,7 @@ Alternatively see the `GitHub` documentation on [creating a pull request](https:
                 <h3>
                     You ?
                 </h3>
-                <img src="https://raw.githubusercontent.com/canturan10/readme-template/master/src/you.png"
+                <img src="https://raw.githubusercontent.com/canturan10/readme-template/master/src/you_satellighte.png"
                     width="200px;" alt="Oğuzcan Turan" /><br>
                 <a href="#">
                     <img src="https://img.shields.io/badge/-Reserved%20Place-red?style=flat&logoColor=white"
@@ -347,6 +297,17 @@ The references used in the development of the project are as follows.
 
 <details>
   <summary>Click to expand!</summary>
+
+  ```BibTeX
+@misc{dai2021coatnet,
+      title={CoAtNet: Marrying Convolution and Attention for All Data Sizes},
+      author={Zihang Dai and Hanxiao Liu and Quoc V. Le and Mingxing Tan},
+      year={2021},
+      eprint={2106.04803},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
 
   ```bibtex
 @article{DBLP:journals/corr/ChengHL17,

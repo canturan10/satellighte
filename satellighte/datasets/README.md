@@ -1,4 +1,7 @@
-# Datasets
+# Datasets <!-- omit in toc -->
+
+- [EuroSAT](#eurosat)
+- [RESISC45](#resisc45)
 
 ## EuroSAT
 

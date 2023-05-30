@@ -83,12 +83,14 @@ pip install onnxruntime~=1.10.0
 
 ```bash
 python deployment/onnx/export.py
+#  python deployment/onnx/export.py --model_name mobilenetv2_default_eurosat --version 0
 ```
 
 ### ONNX Runtime
 
 ```bash
 python deployment/onnx/runtime.py
+#  python deployment/onnx/runtime.py -m satellighte/models/mobilenetv2_default_eurosat/v0/mobilenetv2_default_eurosat.onnx -s src/eurosat_samples/AnnualCrop.jpg
 ```
 
 ## DeepSparse
@@ -107,6 +109,7 @@ pip install deepsparse~=1.0.2
 
 ```bash
 python deployment/deepsparse/runtime.py
+# python deployment/deepsparse/runtime.py -m -m satellighte/models/mobilenetv2_default_eurosat/v0/mobilenetv2_default_eurosat.onnx -s src/eurosat_samples/AnnualCrop.jpg
 ```
 
 ## TensorFlow

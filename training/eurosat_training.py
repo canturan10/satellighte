@@ -1,12 +1,13 @@
 import argparse
 
 import pytorch_lightning as pl
-import satellighte as sat
 import torch
 import torchmetrics as tm
 import torchvision.transforms as tt
 from torch.utils.data import DataLoader
 from uniplot import plot
+
+import satellighte as sat
 
 
 def parse_arguments():
@@ -305,10 +306,7 @@ def main(args):
     model_save_name = f"{args.arch}_{args.config}_best"
 
     # Define metrics
-    model.add_metric(
-        "accuracy",
-        tm.Accuracy(),
-    )
+    model.add_metric("accuracy", tm.Accuracy())
 
     # Define checkpoint callback
     checkpoint_callback = pl.callbacks.ModelCheckpoint(

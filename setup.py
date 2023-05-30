@@ -56,6 +56,21 @@ def _load_requirements(
     return reqs
 
 
+def _load_version(file_name: str = "satellighte/version.py") -> str:
+    """
+    Load readme from a text file.
+
+    Args:
+        file_name (str, optional): File name that contains the verison. Defaults to ""satellighte/version.py"".
+
+    Returns:
+        str: Version.
+    """
+    with open(os.path.join(_PATH_ROOT, file_name), "r", encoding="utf-8") as file:
+        version = file.read().split("=")[-1].replace("'", "").replace('"', "").strip()
+    return version
+
+
 def _load_py_module(fname, pkg="satellighte"):
     spec = spec_from_file_location(
         os.path.join(pkg, fname), os.path.join(_PATH_ROOT, pkg, fname)
@@ -104,7 +119,7 @@ extras_require = {
 }
 setuptools.setup(
     name=about.__pkg_name__,
-    version=about.__version__,
+    version=_load_version(),
     description=about.__description__,
     author=about.__author__,
     author_email=about.__author_email__,
@@ -114,7 +129,7 @@ setuptools.setup(
     include_package_data=True,
     long_description=_load_readme(),
     long_description_content_type="text/markdown",
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     extras_require=extras_require,
     setup_requires=[],
     install_requires=__requirements__,
@@ -126,7 +141,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
         # Specify the Python versions you support here.
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
     ],
