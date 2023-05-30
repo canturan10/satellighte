@@ -1,0 +1,1 @@
+from .coatnet import CoatNet

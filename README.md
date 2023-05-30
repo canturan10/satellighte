@@ -148,10 +148,10 @@ _For more information, please refer to the [APIs](https://github.com/canturan10/
 <!-- ARCHITECTURES -->
 ## Architectures
 
-- [x] [MobileNetV2](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#mobilenetv2)
+- [x] [CoAtNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#coatnet)
 - [x] [EfficientNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#efficientnet)
+- [x] [MobileNetV2](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#mobilenetv2)
 - [x] [ResNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md#resnet)
-- [ ] [CoAtNet](https://github.com/canturan10/satellighte/blob/master/satellighte/archs/README.md)
 
 _For more information, please refer to the [Architectures](https://github.com/canturan10/satellighte/blob/master/satellighte/archs)_
 
@@ -260,7 +260,7 @@ Alternatively see the `GitHub` documentation on [creating a pull request](https:
                 <h3>
                     You ?
                 </h3>
-                <img src="https://raw.githubusercontent.com/canturan10/readme-template/master/src/you.png"
+                <img src="https://raw.githubusercontent.com/canturan10/readme-template/master/src/you_satellighte.png"
                     width="200px;" alt="Oğuzcan Turan" /><br>
                 <a href="#">
                     <img src="https://img.shields.io/badge/-Reserved%20Place-red?style=flat&logoColor=white"
@@ -297,6 +297,17 @@ The references used in the development of the project are as follows.
 
 <details>
   <summary>Click to expand!</summary>
+
+  ```BibTeX
+@misc{dai2021coatnet,
+      title={CoAtNet: Marrying Convolution and Attention for All Data Sizes},
+      author={Zihang Dai and Hanxiao Liu and Quoc V. Le and Mingxing Tan},
+      year={2021},
+      eprint={2106.04803},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
 
   ```bibtex
 @article{DBLP:journals/corr/ChengHL17,
