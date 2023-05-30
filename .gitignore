@@ -5,6 +5,7 @@ satellighte/datas/*
 *.onnx
 *.tflite
 *.pb
+.vscode/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
